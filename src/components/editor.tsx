@@ -3,17 +3,26 @@ import Tiptap from "./TipTap";
 import { Button } from "./ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
+import { useState } from "react";
 
 export function Editor() {
+	const [title, setTitle] = useState('Give a title to your note :p');
+
+	const handleTitleChange = (e: React.FormEvent<HTMLDivElement>) => {
+		setTitle(e.currentTarget.textContent || "");
+	};
+
 	return (
 		<main className="flex-grow bg-background content-center">
 			<Card className="h-full w-full rounded-none">
 				<CardHeader className="flex items-center justify-between">
 					<CardTitle
 						contentEditable
-						className="flex items-center gap-2 text-2xl"
+						onChange={handleTitleChange}
+						suppressContentEditableWarning
+						className="flex items-center gap-2 text-2xl outline-none"
 					>
-						Give a title to your note :p
+						{title}
 					</CardTitle>
 
 					<div className="space-x-2">

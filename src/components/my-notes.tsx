@@ -1,43 +1,25 @@
-import { EllipsisVertical } from "lucide-react";
-import { Button } from "./ui/button";
-import {
-	Card,
-	CardHeader,
-	CardTitle,
-	CardContent,
-	CardFooter,
-} from "./ui/card";
-import { Badge } from "./ui/badge";
 import { ScrollArea } from "./ui/scroll-area";
+import { useNote } from "@/hooks/useNote";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
+import { NotePeek } from "./note-peek";
 
 export function MyNotes() {
+	const { notes } = useNote();
+
 	return (
-		<ScrollArea className="h-96">
-			<div className="pr-4 space-y-4">
-				{Array.from({ length: 25 }).map((_, index) => (
-					<Card className="gap-2" key={index}>
-						<CardHeader className="flex items-center justify-between mb-1">
-							<CardTitle className="text-xl">Title of note</CardTitle>
-							<Button variant="secondary" size="icon">
-								<EllipsisVertical />
-							</Button>
-						</CardHeader>
-
-						<CardContent>
-							<p className="opacity-75 line-clamp-2 text-ellipsis max-w-full overflow-hidden">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
-								modi rerum minus, quas est necessitatibus in, ab, fugiat earum rem
-								beatae libero doloribus repellat placeat nobis expedita deserunt
-								illo deleniti.
-							</p>
-						</CardContent>
-
-						<CardFooter>
-							<Badge>Mark</Badge>
-						</CardFooter>
-					</Card>
-				))}
-			</div>
-		</ScrollArea>
+		<div className="flex flex-col flex-1 gap-2 min-h-0 mt-3 px-2">
+			<h4>You have {notes?.length} notes</h4>
+			<ScrollArea className="flex-1 min-h-0">
+				<SidebarMenu className="space-y-2 pr-3">
+					{notes?.map((note) => (
+						<SidebarMenuItem key={note.id}>
+							<SidebarMenuButton asChild>
+								<NotePeek note={note} />
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					))}
+				</SidebarMenu>
+			</ScrollArea>
+		</div>
 	);
 }

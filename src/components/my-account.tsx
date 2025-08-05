@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 export function MyAccount() {
   return (
     <Popover>
-      <div className="flex items-center justify-between pt-4">
+      <div className="border border-border flex items-center justify-between p-3 rounded-md mt-3 bg-card">
         <div className="flex items-center gap-2.5">
           <Avatar className="h-9 w-9 rounded-lg ring ring-card-foreground">
             <AvatarImage
