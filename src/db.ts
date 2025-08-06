@@ -1,41 +1,44 @@
-import Dexie, { type EntityTable } from 'dexie';
+import Dexie, { type EntityTable } from 'dexie'
 
 interface Note {
-  id: number;
-  title: string;
-  content?: string;
-  isPined?: boolean;
-  createdAt: number; // timestamp
-  updatedAt?: number; // timestamp
+  id: number
+  title: string
+  content?: string
+  isPined?: boolean
+  createdAt: number // timestamp
+  updatedAt?: number // timestamp
 }
 
 interface Tag {
-  id: number;
-  title: string;
+  id: number
+  title: string
 }
 
 interface NoteTag {
-  note: number;
+  note: number
   tag: number
 }
 
 const IndexDB = new Dexie('db.note.me') as Dexie & {
-  note: EntityTable<Note, 'id'>;
-  tag: EntityTable<Tag, 'id'>;
-  noteTag: EntityTable<NoteTag>;
-};
+  note: EntityTable<Note, 'id'>
+  tag: EntityTable<Tag, 'id'>
+  noteTag: EntityTable<NoteTag>
+}
 
-IndexDB.version(2).stores({
-  note: '++id, title, content, isPined, createdAt, updatedAt',
-  tag: '++id, title',
-  noteTag: '[note+tag]'
-}).upgrade(tx => {
-  return tx.table('note').toCollection().modify(note => {
-    if (note.isPined === undefined) note.isPined = false;
-    if (note.tags === undefined) note.tags = '';
-  });
-});
+IndexDB.version(2)
+  .stores({
+    note: '++id, title, content, isPined, createdAt, updatedAt',
+    tag: '++id, title',
+    noteTag: '[note+tag]',
+  })
+  .upgrade((tx) => {
+    return tx
+      .table('note')
+      .toCollection()
+      .modify((note) => {
+        if (note.isPined === undefined) note.isPined = false
+        if (note.tags === undefined) note.tags = ''
+      })
+  })
 
-console.dir(IndexDB.tables);
-
-export { IndexDB, type Note };
+export { IndexDB, type Note }
