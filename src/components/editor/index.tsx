@@ -1,4 +1,13 @@
-import { CloudOffIcon, Download, Paperclip, PenBoxIcon } from 'lucide-react'
+import {
+  ChevronLeft,
+  CloudOffIcon,
+  Download,
+  Paperclip,
+  PenBoxIcon,
+  Pin,
+  Save,
+  X,
+} from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
@@ -25,16 +34,33 @@ export function Editor() {
         ) : (
           <>
             <CardHeader className="flex items-center justify-between">
-              <CardTitle
-                contentEditable
-                onChange={handleTitleChange}
-                suppressContentEditableWarning
-                className="flex items-center gap-2 text-2xl outline-none"
-              >
-                {title}
+              <CardTitle className="flex items-center gap-3">
+                <Button size="sm" variant="destructive">
+                  <X />
+                </Button>
+
+                <span
+                  contentEditable
+                  onChange={handleTitleChange}
+                  suppressContentEditableWarning
+                  className="text-2xl outline-none"
+                >
+                  {title}
+                </span>
               </CardTitle>
 
               <div className="space-x-2">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <Pin />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="font-semibold text-sm">
+                    Pin your note
+                  </TooltipContent>
+                </Tooltip>
+
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button variant="outline" size="icon">
@@ -70,7 +96,18 @@ export function Editor() {
 
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="secondary" size="icon" className="ml-2">
+                    <Button variant="secondary" size="icon" className="ml-4">
+                      <Save />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="font-semibold text-sm">
+                    Can't save on your device :/
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="secondary" size="icon">
                       <CloudOffIcon />
                     </Button>
                   </TooltipTrigger>

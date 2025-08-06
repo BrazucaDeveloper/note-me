@@ -7,7 +7,7 @@ export default function App() {
   return (
     <NoteProvider>
       <SidebarProvider>
-        <div className="flex h-dvh w-dvw">
+        <div className="flex h-dvh w-dvw subpixel-antialiased">
           <Aside />
           <Editor />
         </div>

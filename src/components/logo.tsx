@@ -12,12 +12,12 @@ export function Logo({
 }: LogoProps) {
   if (!withTitle)
     return (
-      <Sprout className="box-content bg-foreground p-0.5 rounded text-background stroke-[1.5px]" />
+      <Sprout className="box-content bg-foreground p-1 rounded-sm text-background stroke-[1.5px]" />
     )
 
   return (
-    <div className={`flex flex-${orientation} items-center gap-2`}>
-      <Sprout className="box-content bg-foreground p-0.5 rounded text-background stroke-[1.5px]" />
+    <div className={`flex flex-${orientation} items-end gap-2`}>
+      <Sprout className="box-content bg-foreground p-1 rounded-sm text-background stroke-[1.5px]" />
       <h4>Note.me</h4>
     </div>
   )

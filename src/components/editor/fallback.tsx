@@ -1,4 +1,4 @@
-import { Import, Sprout } from 'lucide-react'
+import { Apple, Github, Import, Sprout } from 'lucide-react'
 import { NewNote } from '../note/new-note'
 import { Button } from '../ui/button'
 import { Separator } from '../ui/separator'
@@ -20,9 +20,9 @@ export function Fallback() {
 
       <div className='flex flex-col items-center gap-4 w-full'>
         <div className='space-x-4'>
-          <NewNote withTitle={true} variant="default" />
+          <NewNote withTitle={true} variant="default" size='lg' />
 
-          <Button variant="outline">
+          <Button variant="outline" size='lg'>
             <Import /> Import from device
           </Button>
         </div>
@@ -33,15 +33,15 @@ export function Fallback() {
           <Separator className='bg-foreground/70' />
         </div>
 
-        <div className='space-x-2'>
+        <div className='flex items-center gap-4'>
           <Button size="lg" variant="outline">
-            Google
+            <span className='font-bold text-lg'>G</span> Google
           </Button>
           <Button size="lg" variant="outline">
-            Facebook
+            <Github /> Github
           </Button>
           <Button size="lg" variant="outline">
-            Apple
+            <Apple /> Apple
           </Button>
         </div>
       </div>

@@ -11,7 +11,7 @@ const NoteContext = createContext({} as NoteContextProps)
 const NoteProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
 
-  const handleNoteSelect = (note: Note) => {
+  const handleNoteSelect = (note: Note | null) => {
     setSelectedNote(note)
   }
 
