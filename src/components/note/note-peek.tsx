@@ -59,7 +59,10 @@ export function NotePeek({ note }: NotePeekProps) {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="dark:bg-background h-7 w-7 rounded-sm">
+            <Button
+              variant="outline"
+              className="dark:bg-background h-7 w-7 rounded-sm"
+            >
               <Ellipsis />
             </Button>
           </DropdownMenuTrigger>

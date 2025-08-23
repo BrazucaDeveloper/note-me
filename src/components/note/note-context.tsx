@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react'
 
 interface NoteContextProps {
   selectedNote: Note | null
-  handleNoteSelect: (note: Note) => void
+  handleNoteSelect: (note: Note | null) => void
 }
 
 const NoteContext = createContext({} as NoteContextProps)

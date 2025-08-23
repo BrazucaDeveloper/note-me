@@ -1,5 +1,4 @@
 import {
-  ChevronLeft,
   CloudOffIcon,
   Download,
   Paperclip,
@@ -9,15 +8,15 @@ import {
   X,
 } from 'lucide-react'
 import { useState } from 'react'
+import { getNoteContext } from '../note/note-context'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
-import Tiptap from './TipTap'
-import { getNoteContext } from '../note/note-context'
 import { Fallback } from './fallback'
+import Tiptap from './tip-tap'
 
 export function Editor() {
-  const { selectedNote } = getNoteContext()
+  const { selectedNote, handleNoteSelect } = getNoteContext()
   const [title, setTitle] = useState(
     selectedNote?.title ?? 'Give a title to your note :p',
   )
@@ -25,6 +24,8 @@ export function Editor() {
   const handleTitleChange = (e: React.FormEvent<HTMLDivElement>) => {
     setTitle(e.currentTarget.textContent || '')
   }
+
+  const closeNote = () => handleNoteSelect(null)
 
   return (
     <main className="flex-grow bg-background content-center">
@@ -35,7 +36,7 @@ export function Editor() {
           <>
             <CardHeader className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-3">
-                <Button size="sm" variant="destructive">
+                <Button size="sm" variant="destructive" onClick={closeNote}>
                   <X />
                 </Button>
 

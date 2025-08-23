@@ -6,10 +6,7 @@ interface LogoProps extends ComponentProps<'svg'> {
   orientation?: 'row' | 'column'
 }
 
-export function Logo({
-  withTitle = true,
-  orientation = 'row',
-}: LogoProps) {
+export function Logo({ withTitle = true, orientation = 'row' }: LogoProps) {
   if (!withTitle)
     return (
       <Sprout className="box-content bg-foreground p-1 rounded-sm text-background stroke-[1.5px]" />

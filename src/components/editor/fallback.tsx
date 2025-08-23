@@ -18,24 +18,24 @@ export function Fallback() {
         </p>
       </div>
 
-      <div className='flex flex-col items-center gap-4 w-full'>
-        <div className='space-x-4'>
-          <NewNote withTitle={true} variant="default" size='lg' />
+      <div className="flex flex-col items-center gap-4 w-full">
+        <div className="space-x-4">
+          <NewNote withTitle={true} variant="default" size="lg" />
 
-          <Button variant="outline" size='lg'>
+          <Button variant="outline" size="lg">
             <Import /> Import from device
           </Button>
         </div>
 
-        <div className='flex items-center justify-center w-24 mt-3 mb-1'>
-          <Separator className='bg-foreground/70' />
-          <span className='px-2 text-nowrap'>Or continue with cloud sync</span>
-          <Separator className='bg-foreground/70' />
+        <div className="flex items-center justify-center w-24 mt-3 mb-1">
+          <Separator className="bg-foreground/70" />
+          <span className="px-2 text-nowrap">Or continue with cloud sync</span>
+          <Separator className="bg-foreground/70" />
         </div>
 
-        <div className='flex items-center gap-4'>
+        <div className="flex items-center gap-4">
           <Button size="lg" variant="outline">
-            <span className='font-bold text-lg'>G</span> Google
+            <span className="font-bold text-lg">G</span> Google
           </Button>
           <Button size="lg" variant="outline">
             <Github /> Github
