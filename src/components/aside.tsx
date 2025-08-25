@@ -1,18 +1,17 @@
 import { AlertOctagon, Apple, Github } from 'lucide-react'
 import { Logo } from './logo'
-import { MyAccount } from './my-account'
 import { MyNotes } from './note'
 import { NewNote } from './note/new-note'
 import { ToggleTheme } from './toggle-theme'
 import { Alert, AlertDescription, AlertTitle } from './ui/alert'
 import { Button } from './ui/button'
-import { Input } from './ui/input'
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
 } from './ui/sidebar'
+import { NoteSearch } from './note/note-search'
 
 export function Aside() {
   return (
@@ -23,7 +22,7 @@ export function Aside() {
           <ToggleTheme />
         </div>
         <div className="flex gap-2 mt-2">
-          <Input placeholder="Search your notes...." />
+          <NoteSearch />
           <NewNote />
         </div>
       </SidebarHeader>
@@ -60,7 +59,6 @@ export function Aside() {
             </ul>
           </AlertDescription>
         </Alert>
-        {/* <MyAccount /> */}
       </SidebarFooter>
     </Sidebar>
   )

@@ -1,6 +1,6 @@
 import type { Note } from '@/db'
 import { useNote } from '@/hooks/use-note'
-import { Ellipsis, Pin, Trash } from 'lucide-react'
+import { Ellipsis, Pin, PinOff, Trash } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
@@ -21,7 +21,7 @@ interface NotePeekProps {
 const TWO_MINUTES = 120000
 
 export function NotePeek({ note }: NotePeekProps) {
-  const { deleteNote } = useNote()
+  const { deleteNote, togglePin } = useNote()
   const { selectedNote, handleNoteSelect } = getNoteContext()
 
   const createdAt = new Date(Number(note.createdAt))
@@ -53,7 +53,7 @@ export function NotePeek({ note }: NotePeekProps) {
     >
       <header className="flex justify-between w-full">
         <div className="space-x-1.5 font-semibold text-lg line-clamp-1">
-          {note.isPined && <Pin className="size-4.5 inline" />}
+          {note.isPined && <Pin className="size-4.5 inline -rotate-20 fill-foreground" />}
           <span>{note.title}</span>
         </div>
 
@@ -69,8 +69,9 @@ export function NotePeek({ note }: NotePeekProps) {
 
           <DropdownMenuContent>
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Pin /> Pin
+              <DropdownMenuItem onClick={() => togglePin(note.id)}>
+                {note.isPined ? <PinOff /> : <Pin />}
+                {note.isPined ? 'Unpin' : 'Pin'}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => deleteNote(note.id)}>
                 <Trash /> Delete

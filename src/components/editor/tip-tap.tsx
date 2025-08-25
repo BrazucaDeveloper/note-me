@@ -6,6 +6,7 @@ import { Bold, Italic, Underline } from 'lucide-react'
 import { getNoteContext } from '../note/note-context'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 import { useNote } from '@/hooks/use-note'
+import { useEffect } from 'react'
 
 const INTERVAL = 1000 // 1 segundo
 
@@ -13,9 +14,9 @@ export default function Tiptap() {
   const { selectedNote } = getNoteContext()
   const { updateNote } = useNote()
 
-  const saveNote = async ({ editor }: EditorEvents["update"]) => {
+  const saveNote = async ({ editor }: EditorEvents['update']) => {
     if (!selectedNote) return
-    
+
     await updateNote({
       id: selectedNote.id,
       title: selectedNote.title,
@@ -29,6 +30,8 @@ export default function Tiptap() {
   const editor = useEditor({
     extensions: [StarterKit], // define your extension array
     content: selectedNote?.content, // initial content
+    onCreate: () => console.log(`Note ${selectedNote?.id} opened`),
+    onDestroy: () => console.log(`Note ${selectedNote?.id} closed`),
     onUpdate: saveFunctionDebounced,
     autofocus: true,
     editorProps: {
@@ -36,11 +39,11 @@ export default function Tiptap() {
     },
   })
 
-  // // biome-ignore lint/correctness/useExhaustiveDependencies: <>
-  // useEffect(() => {
-  //   if (!selectedNote?.id) return
-  //   editor.commands.setContent(selectedNote?.content ?? '')
-  // }, [selectedNote?.id])
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <>
+  useEffect(() => {
+    if (!selectedNote?.id) return
+    editor.commands.setContent(selectedNote?.content ?? '')
+  }, [selectedNote?.id])
 
   return (
     <>

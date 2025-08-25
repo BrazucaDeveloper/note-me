@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react'
 import type { ComponentProps } from 'react'
 import { Button, type buttonVariants } from '../ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
+import { getNoteContext } from './note-context'
 
 interface NewNoteProps
   extends ComponentProps<'button'>,
@@ -16,11 +17,15 @@ export function NewNote({
   variant = 'secondary',
   ...props
 }: NewNoteProps) {
-  const { createNote } = useNote()
+  const { createNote, findNoteById } = useNote()
+  const { handleNoteSelect } = getNoteContext()
 
   const handleClick = async () => {
     const id = await createNote()
     console.log('New note created with id:', id)
+    const noteCreated = await findNoteById(id)
+
+    if (noteCreated) handleNoteSelect(noteCreated)
   }
 
   if (withTitle)
