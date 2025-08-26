@@ -18,7 +18,7 @@ import { Show } from '../utils/show'
 import { Fallback } from './fallback'
 import Tiptap from './tip-tap'
 
-const INTERVAL = 500
+const HALF_MINUTE = 500
 
 export function Editor() {
   const { selectedNote, handleNoteSelect } = getNoteContext()
@@ -27,11 +27,11 @@ export function Editor() {
   const handleTitleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     await updateNote({
       id: selectedNote?.id!,
-      title: e.target.value
+      title: e.target.value,
     })
   }
 
-  const handleTitleChangeDebounced = useDebounce(handleTitleChange, INTERVAL)
+  const handleTitleChangeDebounced = useDebounce(handleTitleChange, HALF_MINUTE)
   const closeNote = () => handleNoteSelect(null)
 
   return (
@@ -47,9 +47,9 @@ export function Editor() {
               <input
                 type="text"
                 defaultValue={selectedNote?.title}
-                className='text-xl border-none outline-0'
-                placeholder="Give a title to your note :p"
                 onChange={handleTitleChangeDebounced}
+                className="text-xl border-none outline-0"
+                placeholder="Give a title to your note :p"
               />
             </CardTitle>
 

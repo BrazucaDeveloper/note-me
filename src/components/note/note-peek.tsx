@@ -1,6 +1,6 @@
 import type { Note } from '@/db'
 import { useNote } from '@/hooks/use-note'
-import { Ellipsis, Pin, PinOff, Trash } from 'lucide-react'
+import { Ellipsis, Pin, PinOff, Tag, Tags, Trash } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
@@ -9,6 +9,12 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import { SidebarMenuButton } from '../ui/sidebar'
@@ -53,7 +59,9 @@ export function NotePeek({ note }: NotePeekProps) {
     >
       <header className="flex justify-between w-full">
         <div className="space-x-1.5 font-semibold text-lg line-clamp-1">
-          {note.isPined && <Pin className="size-4.5 inline -rotate-20 fill-foreground" />}
+          {note.isPined && (
+            <Pin className="size-4.5 inline -rotate-20 fill-foreground" />
+          )}
           <span>{note.title}</span>
         </div>
 
@@ -73,8 +81,23 @@ export function NotePeek({ note }: NotePeekProps) {
                 {note.isPined ? <PinOff /> : <Pin />}
                 {note.isPined ? 'Unpin' : 'Pin'}
               </DropdownMenuItem>
+
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Tags className="size-4.5 mr-1.5 text-foreground/50" /> Tags
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>#tag_0</DropdownMenuItem>
+                    <DropdownMenuItem>#tag_1</DropdownMenuItem>
+                    <DropdownMenuItem>#tag_2</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+
               <DropdownMenuItem onClick={() => deleteNote(note.id)}>
-                <Trash /> Delete
+                <Trash className="text-rose-400" />
+                <span className="text-rose-400">Delete</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

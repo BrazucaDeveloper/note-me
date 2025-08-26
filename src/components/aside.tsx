@@ -1,7 +1,6 @@
 import { AlertOctagon, Apple, Github } from 'lucide-react'
 import { Logo } from './logo'
 import { MyNotes } from './note'
-import { NewNote } from './note/new-note'
 import { ToggleTheme } from './toggle-theme'
 import { Alert, AlertDescription, AlertTitle } from './ui/alert'
 import { Button } from './ui/button'
@@ -21,10 +20,7 @@ export function Aside() {
           <Logo />
           <ToggleTheme />
         </div>
-        <div className="flex gap-2 mt-2">
-          <NoteSearch />
-          <NewNote />
-        </div>
+        <NoteSearch />
       </SidebarHeader>
 
       <SidebarContent>

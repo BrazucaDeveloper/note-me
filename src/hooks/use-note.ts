@@ -16,39 +16,43 @@ export function useNote() {
     })
   }
 
-  const notes = useLiveQuery(async () => {
-    /*
+  const notes = useLiveQuery(
+    async () => {
+      /*
       Query the DB using our promise based API.
       The end result will magically become observable.
     */
-    if (!query || query === '') {
-      // Buscar todas as notas e ordenar manualmente
-      const allNotes = await IndexDB.note.toArray()
-      // Ordenar: primeiro por isPined (true primeiro), depois por data (mais recente primeiro)
-      return allNotes.sort((a, b) => {
-        // Se ambas têm o mesmo status de fixação, ordena por data (mais recente primeiro)
+      if (!query || query === '') {
+        // Buscar todas as notas e ordenar manualmente
+        const allNotes = await IndexDB.note.toArray()
+        // Ordenar: primeiro por isPined (true primeiro), depois por data (mais recente primeiro)
+        return allNotes.sort((a, b) => {
+          // Se ambas têm o mesmo status de fixação, ordena por data (mais recente primeiro)
+          if ((a.isPined === true) === (b.isPined === true)) {
+            return (b.createdAt || 0) - (a.createdAt || 0)
+          }
+          // Caso contrário, coloca as fixadas primeiro
+          return a.isPined ? -1 : 1
+        })
+      }
+
+      // Para busca com query, fazer o mesmo processo
+      const filteredNotes = await IndexDB.note
+        .where('title')
+        .startsWithIgnoreCase(query)
+        .toArray()
+
+      // Aplicar a mesma lógica de ordenação
+      return filteredNotes.sort((a, b) => {
         if ((a.isPined === true) === (b.isPined === true)) {
           return (b.createdAt || 0) - (a.createdAt || 0)
         }
-        // Caso contrário, coloca as fixadas primeiro
         return a.isPined ? -1 : 1
       })
-    }
-
-    // Para busca com query, fazer o mesmo processo
-    const filteredNotes = await IndexDB.note
-      .where('title')
-      .startsWithIgnoreCase(query)
-      .toArray()
-    
-    // Aplicar a mesma lógica de ordenação
-    return filteredNotes.sort((a, b) => {
-      if ((a.isPined === true) === (b.isPined === true)) {
-        return (b.createdAt || 0) - (a.createdAt || 0)
-      }
-      return a.isPined ? -1 : 1
-    })
-  }, [query], [])
+    },
+    [query],
+    [],
+  )
 
   const findById = async (id: number): Promise<Note | undefined> => {
     return await IndexDB.note.get(id)
@@ -62,7 +66,7 @@ export function useNote() {
 
     return await IndexDB.note.update(note.id, {
       ...noteCleaned,
-      updatedAt: Date.now()
+      updatedAt: Date.now(),
     })
   }
 
@@ -81,10 +85,16 @@ export function useNote() {
     })
   }
 
+  const tagNote = async (note: number, tag: number) => {
+    if (!note) return
+    await IndexDB.noteTag.put({ note, tag })
+  }
+
   return {
     notes,
     findNoteById: findById,
     togglePin,
+    tagNote,
     createNote: create,
     updateNote: update,
     deleteNote: remove,

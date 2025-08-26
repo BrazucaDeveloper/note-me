@@ -1,6 +1,7 @@
 import { useNote } from '@/hooks/use-note'
 import { Input } from '../ui/input'
 import { getNoteContext } from './note-context'
+import { Search } from 'lucide-react'
 
 export function NoteSearch() {
   const { notes } = useNote()
@@ -11,12 +12,15 @@ export function NoteSearch() {
   }
 
   return (
-    <Input
-      type="search" 
-      disabled={!notes}
-      className="w-full"
-      onChange={search}
-      placeholder="Find your notes by title..."
-    />
+    <div className="relative">
+      <Input
+        type="search"
+        disabled={!notes}
+        className="w-full mt-2 h-10.5 pr-11 text-lg"
+        onChange={search}
+        placeholder="Find your notes by title..."
+      />
+      <Search className="pointer-events-none size-4.5 absolute top-1/2 -translate-y-1/2 right-4 mt-1" />
+    </div>
   )
 }
