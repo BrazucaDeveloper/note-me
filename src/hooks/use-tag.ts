@@ -1,11 +1,16 @@
-import { IndexDB } from "@/db"
+import { IndexDB } from '@/db'
+import { useLiveQuery } from 'dexie-react-hooks'
 
 export function useTag() {
   const create = async (title: string) => {
-    return await IndexDB.tag.add({
+    return await IndexDB.tag.put({
       title,
     })
   }
+
+  const tags = useLiveQuery(async () => {
+    return await IndexDB.tag.toArray()
+  })
 
   const update = async (id: number, title: string) => {
     return await IndexDB.tag.update(id, {
@@ -14,11 +19,16 @@ export function useTag() {
   }
 
   const remove = async (id: number) => {
-    return await IndexDB.tag.delete(id)
+    return await IndexDB.transaction('rw', ['tag', 'noteTag'], async () => {
+      await IndexDB.noteTag.where('tag').equals(id).delete()
+      await IndexDB.tag.delete(id)
+    })
   }
 
   return {
+    tags,
     createTag: create,
-    updateTag: update
+    updateTag: update,
+    removeTag: remove,
   }
 }

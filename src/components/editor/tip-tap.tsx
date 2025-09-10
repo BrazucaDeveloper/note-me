@@ -1,12 +1,12 @@
 import { useDebounce } from '@/hooks/use-debounce'
+import { useNote } from '@/hooks/use-note'
 import { EditorContent, useEditor, type EditorEvents } from '@tiptap/react'
 import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus'
 import StarterKit from '@tiptap/starter-kit'
 import { Bold, Italic, Underline } from 'lucide-react'
+import { useEffect } from 'react'
 import { getNoteContext } from '../note/note-context'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
-import { useNote } from '@/hooks/use-note'
-import { useEffect } from 'react'
 
 const INTERVAL = 1000 // 1 segundo
 
@@ -33,13 +33,11 @@ export default function Tiptap() {
     onCreate: () => console.log(`Note ${selectedNote?.id} opened`),
     onDestroy: () => console.log(`Note ${selectedNote?.id} closed`),
     onUpdate: saveFunctionDebounced,
-    autofocus: true,
     editorProps: {
       attributes: { class: 'outline-none' },
     },
   })
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <>
   useEffect(() => {
     if (!selectedNote?.id) return
     editor.commands.setContent(selectedNote?.content ?? '')

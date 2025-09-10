@@ -12,6 +12,7 @@ export function useDebounce<T extends (...args: any[]) => void>(
 ): T {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+  // biome-ignore lint/complexity/useArrowFunction: <It's more readable this way>
   return function (...args: Parameters<T>): void {
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
 

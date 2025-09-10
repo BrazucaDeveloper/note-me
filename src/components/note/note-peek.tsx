@@ -1,6 +1,6 @@
 import type { Note } from '@/db'
 import { useNote } from '@/hooks/use-note'
-import { Ellipsis, Pin, PinOff, Tag, Tags, Trash } from 'lucide-react'
+import { Ellipsis, Pin, PinOff, Tags, Trash } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
@@ -9,9 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuPortal,
-  DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,

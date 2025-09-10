@@ -1,10 +1,10 @@
+import { useLiveQuery } from 'dexie-react-hooks'
 import { getNoteContext } from '@/components/note/note-context'
 import { IndexDB, type Note } from '@/db'
 import { cleanObject } from '@/lib/utils'
-import { useLiveQuery } from 'dexie-react-hooks'
 
 export function useNote() {
-  const { query } = getNoteContext()
+  const { query, selectedTag } = getNoteContext()
 
   const create = async (): Promise<number> => {
     return await IndexDB.note.add({
@@ -18,41 +18,30 @@ export function useNote() {
 
   const notes = useLiveQuery(
     async () => {
-      /*
-      Query the DB using our promise based API.
-      The end result will magically become observable.
-    */
       if (!query || query === '') {
-        // Buscar todas as notas e ordenar manualmente
         const allNotes = await IndexDB.note.toArray()
-        // Ordenar: primeiro por isPined (true primeiro), depois por data (mais recente primeiro)
-        return allNotes.sort((a, b) => {
-          // Se ambas têm o mesmo status de fixação, ordena por data (mais recente primeiro)
-          if ((a.isPined === true) === (b.isPined === true)) {
-            return (b.createdAt || 0) - (a.createdAt || 0)
-          }
-          // Caso contrário, coloca as fixadas primeiro
-          return a.isPined ? -1 : 1
-        })
+        return sortDefault(allNotes)
       }
 
-      // Para busca com query, fazer o mesmo processo
       const filteredNotes = await IndexDB.note
         .where('title')
         .startsWithIgnoreCase(query)
         .toArray()
 
-      // Aplicar a mesma lógica de ordenação
-      return filteredNotes.sort((a, b) => {
-        if ((a.isPined === true) === (b.isPined === true)) {
-          return (b.createdAt || 0) - (a.createdAt || 0)
-        }
-        return a.isPined ? -1 : 1
-      })
+      return sortDefault(filteredNotes)
     },
-    [query],
+    [query, selectedTag],
     [],
   )
+
+  const sortDefault = (notes: Note[]) => {
+    return notes.sort((a, b) => {
+      if ((a.isPined === true) === (b.isPined === true)) {
+        return (b.createdAt || 0) - (a.createdAt || 0)
+      }
+      return a.isPined ? -1 : 1
+    })
+  }
 
   const findById = async (id: number): Promise<Note | undefined> => {
     return await IndexDB.note.get(id)
@@ -61,7 +50,6 @@ export function useNote() {
   const update = async (
     note: Pick<Partial<Note>, 'title' | 'content' | 'isPined'> & { id: number },
   ): Promise<number> => {
-    // Remove undefined values from note object
     const noteCleaned = cleanObject(note)
 
     return await IndexDB.note.update(note.id, {
@@ -86,8 +74,11 @@ export function useNote() {
   }
 
   const tagNote = async (note: number, tag: number) => {
-    if (!note) return
-    await IndexDB.noteTag.put({ note, tag })
+    return await IndexDB.noteTag.put({ note, tag })
+  }
+
+  const unTagNote = async (note: number, tag: number) => {
+    return await IndexDB.noteTag.delete(`${note}-${tag}` as never)
   }
 
   return {
@@ -95,6 +86,7 @@ export function useNote() {
     findNoteById: findById,
     togglePin,
     tagNote,
+    unTagNote,
     createNote: create,
     updateNote: update,
     deleteNote: remove,

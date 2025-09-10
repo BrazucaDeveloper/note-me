@@ -9,16 +9,16 @@ import {
   Save,
   X,
 } from 'lucide-react'
-import { type ChangeEvent } from 'react'
+import { lazy, type ChangeEvent } from 'react'
 import { getNoteContext } from '../note/note-context'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 import { Show } from '../utils/show'
 import { Fallback } from './fallback'
-import Tiptap from './tip-tap'
 
 const HALF_MINUTE = 500
+const TipTap = lazy(() => import('./tip-tap'))
 
 export function Editor() {
   const { selectedNote, handleNoteSelect } = getNoteContext()
@@ -123,7 +123,7 @@ export function Editor() {
           </CardHeader>
 
           <CardContent>
-            <Tiptap />
+            <TipTap />
           </CardContent>
         </Show>
       </Card>

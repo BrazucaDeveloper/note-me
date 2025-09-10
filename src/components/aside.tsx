@@ -1,16 +1,21 @@
-import { AlertOctagon, Apple, Github } from 'lucide-react'
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/clerk-react'
+import { Cloud } from 'lucide-react'
 import { Logo } from './logo'
 import { MyNotes } from './note'
+import { NoteSearch } from './note/note-search'
 import { ToggleTheme } from './toggle-theme'
-import { Alert, AlertDescription, AlertTitle } from './ui/alert'
-import { Button } from './ui/button'
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
 } from './ui/sidebar'
-import { NoteSearch } from './note/note-search'
+import { Card } from './ui/card'
 
 export function Aside() {
   return (
@@ -28,33 +33,27 @@ export function Aside() {
       </SidebarContent>
 
       <SidebarFooter>
-        <Alert>
-          <AlertOctagon />
-          <AlertTitle>
-            Connect your account to sync your notes with cloud.
-          </AlertTitle>
-
-          <AlertDescription>
-            <p>You can connect your account to sync your note with...</p>
-            <ul className="mt-2 flex items-center gap-3 text-sm">
-              <li>
-                <Button size="sm" variant="outline">
-                  <span className="font-bold text-lg">G</span> Google
-                </Button>
-              </li>
-              <li>
-                <Button size="sm" variant="outline">
-                  <Github /> Github
-                </Button>
-              </li>
-              <li>
-                <Button size="sm" variant="outline">
-                  <Apple /> Apple
-                </Button>
-              </li>
-            </ul>
-          </AlertDescription>
-        </Alert>
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button
+              type="button"
+              className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition w-full justify-center"
+            >
+              <Cloud className="w-5 h-5" />
+              <span>Sincronize suas notas na nuvem</span>
+            </button>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton
+            showName
+            appearance={{
+              elements: {
+                userButtonBox: 'px-4 py-3 rounded-lg bg-secondary/70 *:text-primary *:font-medium hover:bg-primary hover:*:text-primary-foreground transition-colors w-full border border-border', 
+              },
+            }}
+         />
+        </SignedIn>
       </SidebarFooter>
     </Sidebar>
   )
