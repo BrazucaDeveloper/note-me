@@ -1,5 +1,5 @@
-import { IndexDB } from '@/db'
 import { useLiveQuery } from 'dexie-react-hooks'
+import { IndexDB } from '@/db'
 
 export function useTag() {
   const create = async (title: string) => {

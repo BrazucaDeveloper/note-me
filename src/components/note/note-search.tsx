@@ -1,7 +1,7 @@
 import { useNote } from '@/hooks/use-note'
 import { Input } from '../ui/input'
 import { getNoteContext } from './note-context'
-import { Search } from 'lucide-react'
+import Search from 'lucide-react/dist/esm/icons/search'
 
 export function NoteSearch() {
   const { notes } = useNote()

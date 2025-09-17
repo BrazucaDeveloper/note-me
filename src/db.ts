@@ -12,11 +12,15 @@ interface Note {
 interface Tag {
   id: number
   title: string
+  createdAt?: number // timestamp
+  updatedAt?: number // timestamp
 }
 
 interface NoteTag {
   note: number
   tag: number
+  createdAt?: number // timestamp
+  updatedAt?: number // timestamp
 }
 
 const IndexDB = new Dexie('db.note.me') as Dexie & {

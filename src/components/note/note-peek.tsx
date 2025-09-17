@@ -1,7 +1,11 @@
+import Ellipsis from 'lucide-react/dist/esm/icons/ellipsis'
+import Pin from 'lucide-react/dist/esm/icons/pin'
+import PinOff from 'lucide-react/dist/esm/icons/pin-off'
+import Tags from 'lucide-react/dist/esm/icons/tags'
+import Trash from 'lucide-react/dist/esm/icons/trash'
+import { useEffect, useState } from 'react'
 import type { Note } from '@/db'
 import { useNote } from '@/hooks/use-note'
-import { Ellipsis, Pin, PinOff, Tags, Trash } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 import {

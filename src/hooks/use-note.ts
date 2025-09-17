@@ -4,7 +4,8 @@ import { IndexDB, type Note } from '@/db'
 import { cleanObject } from '@/lib/utils'
 
 export function useNote() {
-  const { query, selectedTag } = getNoteContext()
+  const { query, selectedTag, setHasLocalSaved, startLocalSaveTransition } =
+    getNoteContext()
 
   const create = async (): Promise<number> => {
     return await IndexDB.note.add({
@@ -50,12 +51,20 @@ export function useNote() {
   const update = async (
     note: Pick<Partial<Note>, 'title' | 'content' | 'isPined'> & { id: number },
   ): Promise<number> => {
-    const noteCleaned = cleanObject(note)
+    setHasLocalSaved(false)
+    let isUpdated = 0
 
-    return await IndexDB.note.update(note.id, {
-      ...noteCleaned,
-      updatedAt: Date.now(),
+    startLocalSaveTransition(async () => {
+      const noteCleaned = cleanObject(note)
+  
+      isUpdated = await IndexDB.note.update(note.id, {
+        ...noteCleaned,
+        updatedAt: Date.now(),
+      })
     })
+
+    setHasLocalSaved(isUpdated === 1)
+    return isUpdated
   }
 
   const remove = async (id: number): Promise<boolean> => {

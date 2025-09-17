@@ -1,15 +1,13 @@
+import CloudOff from 'lucide-react/dist/esm/icons/cloud-off'
+import Download from 'lucide-react/dist/esm/icons/download'
+import Paperclip from 'lucide-react/dist/esm/icons/paperclip'
+import PenBox from 'lucide-react/dist/esm/icons/pen-box'
+import Pin from 'lucide-react/dist/esm/icons/pin'
+import Save from 'lucide-react/dist/esm/icons/save'
+import X from 'lucide-react/dist/esm/icons/x'
+import { type ChangeEvent, lazy } from 'react'
 import { useDebounce } from '@/hooks/use-debounce'
 import { useNote } from '@/hooks/use-note'
-import {
-  CloudOffIcon,
-  Download,
-  Paperclip,
-  PenBoxIcon,
-  Pin,
-  Save,
-  X,
-} from 'lucide-react'
-import { lazy, type ChangeEvent } from 'react'
 import { getNoteContext } from '../note/note-context'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
@@ -68,7 +66,7 @@ export function Editor() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="outline" size="icon">
-                    <PenBoxIcon />
+                    <PenBox />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="font-semibold text-sm">
@@ -112,7 +110,7 @@ export function Editor() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="secondary" size="icon">
-                    <CloudOffIcon />
+                    <CloudOff />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="font-semibold text-sm">

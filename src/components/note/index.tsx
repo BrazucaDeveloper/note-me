@@ -1,11 +1,13 @@
+import NotebookText from 'lucide-react/dist/esm/icons/notebook-text'
+import Plus from 'lucide-react/dist/esm/icons/plus'
+import Tags from 'lucide-react/dist/esm/icons/tags'
 import { useNote } from '@/hooks/use-note'
-import { ScrollArea } from '../ui/scroll-area'
-import { SidebarMenu, SidebarMenuItem } from '../ui/sidebar'
-import { NotePeek } from './note-peek'
-import { NotebookText, Plus, Tags } from 'lucide-react'
 import { Button } from '../ui/button'
+import { ScrollArea } from '../ui/scroll-area'
 import { Separator } from '../ui/separator'
+import { SidebarMenu, SidebarMenuItem } from '../ui/sidebar'
 import { NewNote } from './new-note'
+import { NotePeek } from './note-peek'
 
 export function MyNotes() {
   const { notes } = useNote()
@@ -35,7 +37,7 @@ export function MyNotes() {
             </Button>
             {Array.from({ length: 3 }).map((_, index) => (
               <Button
-                key={index}
+                key={`#tag_${index}`}
                 size="sm"
                 variant="outline"
                 className="h-6.25 px-4 rounded-full"

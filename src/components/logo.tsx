@@ -1,4 +1,4 @@
-import { Sprout } from 'lucide-react'
+import Sprout from 'lucide-react/dist/esm/icons/sprout'
 import type { ComponentProps } from 'react'
 
 interface LogoProps extends ComponentProps<'svg'> {

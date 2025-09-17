@@ -1,4 +1,4 @@
-export function useSyncCloudDatabase() {
+export function useSyncTurso() {
   /* 
   * - Primeira sincronização
   * - Sincronização periodica (cada X minutos)
