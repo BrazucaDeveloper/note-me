@@ -10,7 +10,7 @@ Boas vindas ao projeto **Note.me**! Este é um MVP (Minimum Viable Product) para
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/brazuca/note-me.git
+git clone https://github.com/BrazucaDeveloper/note-me.git
 ```
 
 2. Instale as dependências:
