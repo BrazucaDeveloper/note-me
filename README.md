@@ -1,35 +1,51 @@
 # **🌱 Note.me**
 
-Welcome to Note.me, a simple note-taking app that allows you to create, edit, and delete notes.
+Boas vindas ao projeto **Note.me**! Este é um MVP (Minimum Viable Product) para uma aplicação de gerenciamento de notas simples e intuitiva. Esta aplicação possui armazenamento local, no navegador, através do [Dexie](https://dexie.org/), e armazenamento remoto, através do [Turso](https://turso.tech/).
 
-## **🚀 How to run the project**
 
-1. Clone the repository:
+![Imagem do Projeto](preview.png)
+
+## **🚀 Como executar o projeto**
+
+1. Clone o repositório:
 
 ```bash
 git clone https://github.com/brazuca/note-me.git
 ```
 
-2. Install the dependencies:
+2. Instale as dependências:
 
 ```bash
-npm install
+pnpm install
 ```
 
-3. Copy the `.env.example` file to `.env` and paste yours api key:
+3. Copie o arquivo `.env.example` para `.env` e cole suas chaves (Clerk e Turso) de API:
 
 ```bash
 cp .env.example .env
 ```
 
-4. Run the project:
+4. Execute o projeto:
 
 ```bash
 pnpm build && pnpm preview
 ```
 
-5. Open your browser and go to `http://localhost:5173`
+5. Abra seu navegador e vá para `http://localhost:5173`
+
+## **⚒️ Tecnologias utilizadas**
+
+- ⚡ [Vite](https://vitejs.dev/) - Ferramenta de construção WEB
+- ⚛️ [React](https://reactjs.org/) - Biblioteca Front-End
+- 🟦 [TypeScript](https://www.typescriptlang.org/) - Superset de JavaScript
+- 🎨 [Tailwind CSS](https://tailwindcss.com/) - Framework CSS focado em utilitários
+- 🧩 [Shadcn UI](https://shadcn.com/) - Componentes Tailwind CSS
+- 👤 [Clerk](https://clerk.com/) - Gerenciador de usuários
+- ☁️ [Turso](https://turso.tech/) - Banco de dados, SQLite, em nuvem
+- 📝 [Tiptap](https://tiptap.dev/) - Editor de texto React
+- 🧹 [Biome](https://biomejs.dev/) - Formatador de código
+- 💾 [Dexie](https://dexie.org/) - Biblioteca para acessar o IndexDB
 
 ## **📝 License**
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para obter detalhes.
