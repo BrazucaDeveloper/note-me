@@ -2,7 +2,6 @@
 
 Boas vindas ao projeto **Note.me**! Este é um MVP (Minimum Viable Product) para uma aplicação de gerenciamento de notas simples e intuitiva. Esta aplicação possui armazenamento local, no navegador, através do [Dexie](https://dexie.org/), e armazenamento remoto, através do [Turso](https://turso.tech/).
 
-
 ![Imagem do Projeto](preview.png)
 
 ## **🚀 Como executar o projeto**

@@ -7,44 +7,49 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 import { getNoteContext } from './note-context'
 
 interface NewNoteProps
-  extends ComponentProps<'button'>,
-    VariantProps<typeof buttonVariants> {
-  withTitle?: boolean
+    extends ComponentProps<'button'>,
+        VariantProps<typeof buttonVariants> {
+    withTitle?: boolean
 }
 
 export function NewNote({
-  withTitle = false,
-  variant = 'secondary',
-  ...props
+    withTitle = false,
+    variant = 'secondary',
+    ...props
 }: NewNoteProps) {
-  const { createNote, findNoteById } = useNote()
-  const { handleNoteSelect } = getNoteContext()
+    const { createNote, findNoteById } = useNote()
+    const { handleNoteSelect } = getNoteContext()
 
-  const handleClick = async () => {
-    const id = await createNote()
-    console.log('New note created with id:', id)
-    const noteCreated = await findNoteById(id)
+    const handleClick = async () => {
+        const id = await createNote()
+        console.log('New note created with id:', id)
+        const noteCreated = await findNoteById(id)
 
-    if (noteCreated) handleNoteSelect(noteCreated)
-  }
+        if (noteCreated) handleNoteSelect(noteCreated)
+    }
 
-  if (withTitle)
+    if (withTitle)
+        return (
+            <Button variant={variant} onClick={handleClick} {...props}>
+                <Plus /> Create a new note
+            </Button>
+        )
+
     return (
-      <Button variant={variant} onClick={handleClick} {...props}>
-        <Plus /> Create a new note
-      </Button>
+        <Tooltip>
+            <TooltipTrigger asChild>
+                <Button
+                    size="icon"
+                    variant={variant}
+                    onClick={handleClick}
+                    {...props}
+                >
+                    <Plus />
+                </Button>
+            </TooltipTrigger>
+            <TooltipContent className="font-semibold text-sm">
+                Create a note
+            </TooltipContent>
+        </Tooltip>
     )
-
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button size="icon" variant={variant} onClick={handleClick} {...props}>
-          <Plus />
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent className="font-semibold text-sm">
-        Create a note
-      </TooltipContent>
-    </Tooltip>
-  )
 }

@@ -1,10 +1,23 @@
+// import { IndexDB } from "@/db";
+
+// const RECENT_TIME_UPDATEAT = 1_500; // 1.5s in milliseconds
+
 export function useSyncTurso() {
-  /* 
-  * - Primeira sincronização
-  * - Sincronização periodica (cada X minutos)
-  *   - Salvar alterações em uma pilha?
-  *   - Verificar se há alterações na base de dados
-  *   - Se houver, enviar alterações para a base de dados
-  */
-  return {}
+    // const syncNotes = () => {
+    //     const now = Date.now()
+    //     const less = now - RECENT_TIME_UPDATEAT
+    //     const recentNotes = IndexDB.note.where('updatedAt').between(less, now)
+
+    //     // sync with turso...
+    // }
+
+    // const syncNoteTag = () => {
+    //     IndexDB.noteTag.where('updatedAt').between(0, 1)
+    // }
+
+    // const syncTags = () => {
+    //     IndexDB.tag.where('updatedAt').between(0, 1)
+    // }
+
+    return {};
 }
