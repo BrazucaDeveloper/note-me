@@ -4,7 +4,7 @@ import type { ComponentProps } from 'react'
 import { useNote } from '@/hooks/use-note'
 import { Button, type buttonVariants } from '../ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
-import { getNoteContext } from './note-context'
+import { Show } from '../utils'
 
 interface NewNoteProps
     extends ComponentProps<'button'>,
@@ -17,39 +17,32 @@ export function NewNote({
     variant = 'secondary',
     ...props
 }: NewNoteProps) {
-    const { createNote, findNoteById } = useNote()
-    const { handleNoteSelect } = getNoteContext()
-
-    const handleClick = async () => {
-        const id = await createNote()
-        console.log('New note created with id:', id)
-        const noteCreated = await findNoteById(id)
-
-        if (noteCreated) handleNoteSelect(noteCreated)
-    }
-
-    if (withTitle)
-        return (
-            <Button variant={variant} onClick={handleClick} {...props}>
-                <Plus /> Create a new note
-            </Button>
-        )
+    const { createNote } = useNote()
 
     return (
-        <Tooltip>
-            <TooltipTrigger asChild>
-                <Button
-                    size="icon"
-                    variant={variant}
-                    onClick={handleClick}
-                    {...props}
-                >
-                    <Plus />
+        <Show
+            condition={!withTitle}
+            fallback={
+                <Button variant={variant} onClick={createNote} {...props}>
+                    <Plus /> Create a new note
                 </Button>
-            </TooltipTrigger>
-            <TooltipContent className="font-semibold text-sm">
-                Create a note
-            </TooltipContent>
-        </Tooltip>
+            }
+        >
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button
+                        size="icon"
+                        variant={variant}
+                        onClick={createNote}
+                        {...props}
+                    >
+                        <Plus />
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent className="font-semibold text-sm">
+                    Create a note
+                </TooltipContent>
+            </Tooltip>
+        </Show>
     )
 }

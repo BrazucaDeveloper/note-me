@@ -1,19 +1,21 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { getNoteContext } from '@/components/note/note-context'
-import { IndexDB, type Note } from '@/db'
+import { IndexDB, type Note } from '@/services/db.client'
 import { cleanObject } from '@/lib/utils'
+import { useAuth } from '@clerk/clerk-react'
 
 export function useNote() {
-    const { query, selectedTag, setHasLocalSaved, startLocalSaveTransition } =
-        getNoteContext()
+    const { userId } = useAuth();
+    const { query, selectedTag } = getNoteContext()
 
     const create = async (): Promise<number> => {
         return await IndexDB.note.add({
             title: 'Give a title to your new note :)',
             content: '🌱 Sprout your ideias here!',
             isPined: false,
+            owner: Number(userId) || undefined,
             createdAt: Date.now(),
-            updatedAt: undefined,
+            updatedAt: Date.now(),
         })
     }
 
@@ -35,6 +37,16 @@ export function useNote() {
         [],
     )
 
+    const getRecentNotes = async () => {
+        const now = Date.now()
+        const someSecsAgo = now - import.meta.env.VITE_RECENT_TIME_UPDATEAT
+
+        return await IndexDB.note
+            .where('updatedAt')
+            .between(someSecsAgo, now, true, true)
+            .toArray()
+    }
+
     const sortDefault = (notes: Note[]) => {
         return notes.sort((a, b) => {
             if ((a.isPined === true) === (b.isPined === true)) {
@@ -44,62 +56,45 @@ export function useNote() {
         })
     }
 
-    const findById = async (id: number): Promise<Note | undefined> => {
-        return await IndexDB.note.get(id)
+    const findById = async (cid: number): Promise<Note | undefined> => {
+        return await IndexDB.note.get(cid)
     }
 
     const update = async (
         note: Pick<Partial<Note>, 'title' | 'content' | 'isPined'> & {
-            id: number
+            cid: number
         },
     ): Promise<number> => {
-        setHasLocalSaved(false)
-        let isUpdated = 0
+        const noteCleaned = cleanObject(note)
 
-        startLocalSaveTransition(async () => {
-            const noteCleaned = cleanObject(note)
-
-            isUpdated = await IndexDB.note.update(note.id, {
-                ...noteCleaned,
-                updatedAt: Date.now(),
-            })
+        return await IndexDB.note.update(note.cid, {
+            ...noteCleaned,
+            updatedAt: Date.now(),
         })
-
-        setHasLocalSaved(isUpdated === 1)
-        return isUpdated
     }
 
-    const remove = async (id: number): Promise<boolean> => {
-        await IndexDB.note.delete(id)
-        return (await IndexDB.note.where({ id }).count()) <= 0
+    const remove = async (cid: number): Promise<boolean> => {
+        await IndexDB.note.delete(cid)
+        return (await IndexDB.note.where({ cid }).count()) <= 0
     }
 
-    const togglePin = async (id: number) => {
-        const note = await findById(id)
+    const togglePin = async (cid: number) => {
+        const note = await findById(cid)
         if (!note) return
 
         await update({
-            id,
+            cid,
             isPined: !note.isPined,
         })
-    }
-
-    const tagNote = async (note: number, tag: number) => {
-        return await IndexDB.noteTag.put({ note, tag })
-    }
-
-    const unTagNote = async (note: number, tag: number) => {
-        return await IndexDB.noteTag.delete(`${note}-${tag}` as never)
     }
 
     return {
         notes,
         findNoteById: findById,
         togglePin,
-        tagNote,
-        unTagNote,
         createNote: create,
         updateNote: update,
         deleteNote: remove,
+        getRecentNotes,
     }
 }

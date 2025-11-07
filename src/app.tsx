@@ -1,16 +1,16 @@
-import { ClerkProvider } from "@clerk/clerk-react";
-import { Aside } from "./components/aside";
-import { Editor } from "./components/editor";
-import { NoteProvider } from "./components/note/note-context";
-import { SidebarProvider } from "./components/ui/sidebar";
+import { ClerkProvider } from '@clerk/clerk-react'
+import { Aside } from './components/aside'
+import { Editor } from './components/editor'
+import { NoteProvider } from './components/note/note-context'
+import { SidebarProvider } from './components/ui/sidebar'
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 export default function App() {
     return (
         <ClerkProvider
             publishableKey={PUBLISHABLE_KEY}
-            appearance={{ cssLayerName: "clerk" }}
+            appearance={{ cssLayerName: 'clerk' }}
         >
             <NoteProvider>
                 <SidebarProvider>
@@ -21,5 +21,5 @@ export default function App() {
                 </SidebarProvider>
             </NoteProvider>
         </ClerkProvider>
-    );
+    )
 }

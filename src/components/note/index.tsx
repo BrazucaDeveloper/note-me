@@ -1,17 +1,19 @@
-import NotebookText from "lucide-react/dist/esm/icons/notebook-text";
-import Plus from "lucide-react/dist/esm/icons/plus";
-import Tags from "lucide-react/dist/esm/icons/tags";
-import { useNote } from "@/hooks/use-note";
-import { Button } from "../ui/button";
-import { ScrollArea } from "../ui/scroll-area";
-import { Separator } from "../ui/separator";
-import { SidebarMenu, SidebarMenuItem } from "../ui/sidebar";
-import { NewNote } from "./new-note";
-import { NotePeek } from "./note-peek";
-import { Show } from "../utils/show";
+import NotebookText from 'lucide-react/dist/esm/icons/notebook-text'
+import Plus from 'lucide-react/dist/esm/icons/plus'
+import Tags from 'lucide-react/dist/esm/icons/tags'
+import { useNote } from '@/hooks/use-note'
+import { Button } from '../ui/button'
+import { ScrollArea } from '../ui/scroll-area'
+import { Separator } from '../ui/separator'
+import { SidebarMenu, SidebarMenuItem } from '../ui/sidebar'
+import { NewNote } from './new-note'
+import { NotePeek } from './note-peek'
+import { Show } from '../utils'
+import { useTag } from '@/hooks/use-tag'
 
 export function MyNotes() {
-    const { notes } = useNote();
+    const { notes } = useNote()
+    const { tags } = useTag()
 
     return (
         <div className="flex flex-col flex-1 gap-2 min-h-0 mt-4 px-2 pl-4">
@@ -36,14 +38,14 @@ export function MyNotes() {
                         >
                             #None
                         </Button>
-                        {Array.from({ length: 3 }).map((_, index) => (
+                        {tags?.map((tag) => (
                             <Button
-                                key={`#tag_${index}`}
+                                key={tag.cid}
                                 size="sm"
-                                variant="outline"
+                                variant="secondary"
                                 className="h-6.25 px-4 rounded-full"
                             >
-                                #tag_{index}
+                                #{tag.title}
                             </Button>
                         ))}
                     </ul>
@@ -72,7 +74,7 @@ export function MyNotes() {
                 <ScrollArea className="flex-1 min-h-0">
                     <SidebarMenu className="space-y-2 pr-3">
                         {notes?.map((note) => (
-                            <SidebarMenuItem key={note.id}>
+                            <SidebarMenuItem key={note.cid}>
                                 <NotePeek note={note} />
                             </SidebarMenuItem>
                         ))}
@@ -80,5 +82,5 @@ export function MyNotes() {
                 </ScrollArea>
             </Show>
         </div>
-    );
+    )
 }

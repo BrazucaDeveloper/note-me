@@ -1,39 +1,17 @@
-import CloudOff from 'lucide-react/dist/esm/icons/cloud-off'
-import Download from 'lucide-react/dist/esm/icons/download'
-import Paperclip from 'lucide-react/dist/esm/icons/paperclip'
-import PenBox from 'lucide-react/dist/esm/icons/pen-box'
-import Pin from 'lucide-react/dist/esm/icons/pin'
-import Save from 'lucide-react/dist/esm/icons/save'
 import X from 'lucide-react/dist/esm/icons/x'
-import { type ChangeEvent, lazy } from 'react'
-import { useDebounce } from '@/hooks/use-debounce'
-import { useNote } from '@/hooks/use-note'
+import { lazy } from 'react'
 import { getNoteContext } from '../note/note-context'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
-import { Show } from '../utils/show'
+import { Show } from '../utils'
 import { Fallback } from './fallback'
+import { Tools } from './tools'
+import { Title } from './title'
 
-const HALF_MINUTE = 500
 const TipTap = lazy(() => import('./tip-tap'))
 
 export function Editor() {
     const { selectedNote, handleNoteSelect } = getNoteContext()
-    const { updateNote } = useNote()
-
-    const handleTitleChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        await updateNote({
-            id: selectedNote?.id!,
-            title: e.target.value,
-        })
-    }
-
-    const handleTitleChangeDebounced = useDebounce(
-        handleTitleChange,
-        HALF_MINUTE,
-    )
-    const closeNote = () => handleNoteSelect(null)
 
     return (
         <main className="flex-grow bg-background content-center">
@@ -44,91 +22,15 @@ export function Editor() {
                             <Button
                                 size="sm"
                                 variant="destructive"
-                                onClick={closeNote}
+                                onClick={() => handleNoteSelect(null)}
                             >
                                 <X />
                             </Button>
 
-                            <input
-                                type="text"
-                                defaultValue={selectedNote?.title}
-                                onChange={handleTitleChangeDebounced}
-                                className="text-xl border-none outline-0"
-                                placeholder="Give a title to your note :p"
-                            />
+                            <Title />
                         </CardTitle>
 
-                        <div className="space-x-2">
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button variant="outline" size="icon">
-                                        <Pin />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent className="font-semibold text-sm">
-                                    Pin your note
-                                </TooltipContent>
-                            </Tooltip>
-
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button variant="outline" size="icon">
-                                        <PenBox />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent className="font-semibold text-sm">
-                                    Edit mode
-                                </TooltipContent>
-                            </Tooltip>
-
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button variant="outline" size="icon">
-                                        <Paperclip />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent className="font-semibold text-sm">
-                                    Add a media
-                                </TooltipContent>
-                            </Tooltip>
-
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button variant="outline" size="icon">
-                                        <Download />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent className="font-semibold text-sm">
-                                    Download it!
-                                </TooltipContent>
-                            </Tooltip>
-
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button
-                                        variant="secondary"
-                                        size="icon"
-                                        className="ml-4"
-                                    >
-                                        <Save />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent className="font-semibold text-sm">
-                                    Can't save on your device :/
-                                </TooltipContent>
-                            </Tooltip>
-
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button variant="secondary" size="icon">
-                                        <CloudOff />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent className="font-semibold text-sm">
-                                    Can't sync within cloud :/
-                                </TooltipContent>
-                            </Tooltip>
-                        </div>
+                        <Tools />
                     </CardHeader>
 
                     <CardContent>
