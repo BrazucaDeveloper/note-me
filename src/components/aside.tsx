@@ -13,13 +13,13 @@ import { Sidebar, SidebarContent, SidebarHeader } from './ui/sidebar'
 
 export function Aside() {
     return (
-        <Sidebar className="p-2 *:bg-background bg-background">
+        <Sidebar className='p-2 *:bg-background bg-background'>
             <SidebarHeader>
-                <div className="flex items-center justify-between p-3 bg-card rounded-md ring ring-foreground/15">
+                <div className='flex items-center justify-between p-3 bg-card rounded-md ring ring-foreground/15'>
                     <Logo />
                     <SignedOut>
-                        <SignInButton mode="modal">
-                            <Button variant="secondary" size="icon">
+                        <SignInButton mode='modal'>
+                            <Button variant='secondary' size='icon'>
                                 <User />
                             </Button>
                         </SignInButton>

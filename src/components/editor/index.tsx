@@ -1,6 +1,6 @@
 import X from 'lucide-react/dist/esm/icons/x'
 import { lazy } from 'react'
-import { getNoteContext } from '../note/note-context'
+import { getNoteContext } from '@context/note-context'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Show } from '../utils'
@@ -14,14 +14,14 @@ export function Editor() {
     const { selectedNote, handleNoteSelect } = getNoteContext()
 
     return (
-        <main className="flex-grow bg-background content-center">
-            <Card className="h-full w-full rounded-none">
-                <Show condition={!!selectedNote?.id} fallback={<Fallback />}>
-                    <CardHeader className="flex items-center justify-between">
-                        <CardTitle className="flex items-center gap-3">
+        <main className='flex-grow bg-background content-center'>
+            <Card className='h-full w-full rounded-none'>
+                <Show condition={!!selectedNote?.cid} fallback={<Fallback />}>
+                    <CardHeader className='flex items-center justify-between'>
+                        <CardTitle className='flex items-center gap-3'>
                             <Button
-                                size="sm"
-                                variant="destructive"
+                                size='sm'
+                                variant='destructive'
                                 onClick={() => handleNoteSelect(null)}
                             >
                                 <X />

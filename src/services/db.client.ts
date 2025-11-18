@@ -1,32 +1,5 @@
 import Dexie, { type EntityTable } from 'dexie'
-
-interface Note {
-    cid: number // client ID
-    gid?: number // global ID
-    title: string
-    content?: string
-    isPined?: boolean
-    owner?: number // user global ID
-    createdAt: number
-    updatedAt?: number
-}
-
-interface Tag {
-    cid: number // client ID
-    gid?: number // global ID
-    title: string
-    owner?: number // user global ID
-    createdAt?: number
-    updatedAt?: number
-}
-
-interface NoteTag {
-    note: number // note client ID
-    tag: number // tag client ID
-    owner?: number // global user ID
-    createdAt?: number
-    updatedAt?: number
-}
+import type { Note, Tag, NoteTag } from './interfaces'
 
 const IndexDB = new Dexie('db.note.me') as Dexie & {
     note: EntityTable<Note, 'cid'>
@@ -40,4 +13,4 @@ IndexDB.version(1).stores({
     noteTag: '[note+tag], gid, createdAt, updatedAt',
 })
 
-export { IndexDB, type Note }
+export { IndexDB, type Note, type Tag, type NoteTag }

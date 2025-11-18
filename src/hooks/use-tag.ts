@@ -1,10 +1,11 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { IndexDB } from '@/services/db.client'
 import { useAuth } from '@clerk/clerk-react'
+import Dexie from 'dexie'
 
 export function useTag() {
     const { userId } = useAuth()
-    
+
     const create = async (title: string) => {
         return await IndexDB.tag.put({
             title,
@@ -14,7 +15,12 @@ export function useTag() {
         })
     }
 
-    const tags = useLiveQuery(async () => await IndexDB.tag.toArray())
+    const tags = useLiveQuery(async () => await IndexDB.tag.toArray(), [])
+
+    const tagsByNote = useLiveQuery(async () => {
+        const noteTags = await IndexDB.noteTag.toArray()
+        return noteTags.map(tag => tag.tag)
+    })
 
     const update = async (cid: number, title: string) => {
         return await IndexDB.tag.update(cid, {
@@ -25,23 +31,26 @@ export function useTag() {
 
     const remove = async (cid: number) => {
         return await IndexDB.transaction('rw', ['tag', 'noteTag'], async () => {
-            await IndexDB.noteTag.where('tag').equals(cid).delete()
+            await IndexDB.noteTag
+                .where('[note+tag]')
+                .between([Dexie.minKey, cid], [Dexie.maxKey, cid])
+                .delete()
             await IndexDB.tag.delete(cid)
         })
     }
 
-    const tagNote = async (note: number, tag: number) => {
-        return await IndexDB.noteTag.put({ note, tag })
-    }
-
-    const unTagNote = async (note: number, tag: number) => {
-        return await IndexDB.noteTag.delete(`${note}-${tag}` as never)
+    const toggleTagNote = async (note: number, tag: number) => {
+        const noteTag = IndexDB.noteTag
+            .where('[note+tag]')
+            .equals(`${note}-${tag}`)
+        if ((await noteTag.count()) > 0) return await noteTag.delete()
+        return await IndexDB.noteTag.add({ note, tag })
     }
 
     return {
         tags,
-        tagNote,
-        unTagNote,
+        toggleTagNote,
+        tagsByNote,
         createTag: create,
         updateTag: update,
         removeTag: remove,

@@ -1,12 +1,12 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { getNoteContext } from '@/components/note/note-context'
+import { getNoteContext } from '@context/note-context'
 import { IndexDB, type Note } from '@/services/db.client'
 import { cleanObject } from '@/lib/utils'
 import { useAuth } from '@clerk/clerk-react'
 
 export function useNote() {
-    const { userId } = useAuth();
-    const { query, selectedTag } = getNoteContext()
+    const { userId } = useAuth()
+    const { query, selectedTags } = getNoteContext()
 
     const create = async (): Promise<number> => {
         return await IndexDB.note.add({
@@ -31,10 +31,20 @@ export function useNote() {
                 .startsWithIgnoreCase(query)
                 .toArray()
 
-            return sortDefault(filteredNotes)
+            if (!selectedTags || selectedTags.length === 0) {
+                return sortDefault(filteredNotes)
+            }
+
+            const filteredNotesByTags = await IndexDB.note
+                .where('tags')
+                .anyOf(selectedTags)
+                .toArray()
+
+            const mergedNotes = [...filteredNotes, ...filteredNotesByTags]
+            return sortDefault(mergedNotes)
         },
-        [query, selectedTag],
-        [],
+        [query, selectedTags],
+        []
     )
 
     const getRecentNotes = async () => {
@@ -63,7 +73,7 @@ export function useNote() {
     const update = async (
         note: Pick<Partial<Note>, 'title' | 'content' | 'isPined'> & {
             cid: number
-        },
+        }
     ): Promise<number> => {
         const noteCleaned = cleanObject(note)
 

@@ -31,7 +31,7 @@ export function NewNote({
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Button
-                        size="icon"
+                        size='icon'
                         variant={variant}
                         onClick={createNote}
                         {...props}
@@ -39,7 +39,7 @@ export function NewNote({
                         <Plus />
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent className="font-semibold text-sm">
+                <TooltipContent className='font-semibold text-sm'>
                     Create a note
                 </TooltipContent>
             </Tooltip>

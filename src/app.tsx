@@ -1,7 +1,7 @@
 import { ClerkProvider } from '@clerk/clerk-react'
 import { Aside } from './components/aside'
 import { Editor } from './components/editor'
-import { NoteProvider } from './components/note/note-context'
+import { NoteProvider } from './context/note-context'
 import { SidebarProvider } from './components/ui/sidebar'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -14,7 +14,7 @@ export default function App() {
         >
             <NoteProvider>
                 <SidebarProvider>
-                    <div className="flex h-dvh w-dvw subpixel-antialiased">
+                    <div className='flex h-dvh w-dvw subpixel-antialiased'>
                         <Aside />
                         <Editor />
                     </div>

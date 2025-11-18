@@ -31,11 +31,11 @@
     },
     "javascript": {
         "formatter": {
-            "jsxQuoteStyle": "double",
+            "jsxQuoteStyle": "single",
             "quoteProperties": "asNeeded",
-            "trailingCommas": "all",
+            "trailingCommas": "es5",
             "semicolons": "asNeeded",
-            "arrowParentheses": "always",
+            "arrowParentheses": "asNeeded",
             "bracketSpacing": true,
             "bracketSameLine": false,
             "quoteStyle": "single",

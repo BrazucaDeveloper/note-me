@@ -12,11 +12,11 @@ export function Logo({ withTitle = true, orientation = 'row' }: LogoProps) {
         <Show
             condition={withTitle}
             fallback={
-                <Sprout className="box-content bg-foreground p-1 rounded-sm text-background stroke-[1.5px]" />
+                <Sprout className='box-content bg-foreground p-1 rounded-sm text-background stroke-[1.5px]' />
             }
         >
             <div className={`flex flex-${orientation} items-end gap-0.5`}>
-                <Sprout className="box-content p-1" />
+                <Sprout className='box-content p-1' />
                 <h4>Note.me</h4>
             </div>
         </Show>
