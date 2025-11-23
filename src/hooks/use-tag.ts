@@ -2,9 +2,11 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { IndexDB } from '@/services/db.client'
 import { useAuth } from '@clerk/clerk-react'
 import Dexie from 'dexie'
+import { useRef } from 'react'
 
 export function useTag() {
     const { userId } = useAuth()
+    const noteIdToSearch = useRef<number | null>(null)
 
     const create = async (title: string) => {
         return await IndexDB.tag.put({
@@ -18,9 +20,16 @@ export function useTag() {
     const tags = useLiveQuery(async () => await IndexDB.tag.toArray(), [])
 
     const tagsByNote = useLiveQuery(async () => {
-        const noteTags = await IndexDB.noteTag.toArray()
-        return noteTags.map(tag => tag.tag)
-    })
+        if (!noteIdToSearch.current) return []
+        const noteTag = await IndexDB.noteTag
+            .where('note')
+            .equals(noteIdToSearch.current)
+            .toArray()
+        return await IndexDB.tag.bulkGet(noteTag.map(item => item.tag))
+    }, [noteIdToSearch.current])
+
+    const handleNoteToSearch = (note: number | null) =>
+        (noteIdToSearch.current = note)
 
     const update = async (cid: number, title: string) => {
         return await IndexDB.tag.update(cid, {
@@ -43,14 +52,24 @@ export function useTag() {
         const noteTag = IndexDB.noteTag
             .where('[note+tag]')
             .equals(`${note}-${tag}`)
+
         if ((await noteTag.count()) > 0) return await noteTag.delete()
-        return await IndexDB.noteTag.add({ note, tag })
+        const now = Date.now()
+
+        return await IndexDB.noteTag.add({
+            note,
+            tag,
+            createdAt: now,
+            updatedAt: now,
+            owner: Number(userId) || undefined,
+        })
     }
 
     return {
         tags,
         toggleTagNote,
         tagsByNote,
+        handleNoteToSearch,
         createTag: create,
         updateTag: update,
         removeTag: remove,

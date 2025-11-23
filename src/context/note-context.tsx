@@ -5,16 +5,16 @@ import { createContext, useContext, useState } from 'react'
 interface NoteContextProps {
     selectedNote: Note | null
     handleNoteSelect: (note: Note | null) => void
-    query: string | null
+    query: string
     handleQueryChange: (query: string) => void
-    selectedTags: string[] | null
+    selectedTags: string[]
     handleTagsSelected: (tags: string[]) => void
 }
 
 const NoteContext = createContext({} as NoteContextProps)
 
 const NoteProvider = ({ children }: { children: React.ReactNode }) => {
-    const [selectedTags, setSelectedTag] = useState<string[] | null>(null)
+    const [selectedTags, setSelectedTag] = useState<string[]>([])
     const handleTagsSelected = (tags: string[]) => {
         setSelectedTag(tags)
         console.log('Tags selected:', tags)
@@ -27,7 +27,7 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
         (newQuery: string) => setQuery(newQuery.trim()),
         500
     )
-    const [query, setQuery] = useState<string | null>(null)
+    const [query, setQuery] = useState<string>('')
 
     return (
         <NoteContext

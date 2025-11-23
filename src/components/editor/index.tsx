@@ -8,7 +8,7 @@ import { Fallback } from './fallback'
 import { Tools } from './tools'
 import { Title } from './title'
 
-const TipTap = lazy(() => import('./tip-tap'))
+const TipTap = lazy(() => import('./tip-tap/index.tsx'))
 
 export function Editor() {
     const { selectedNote, handleNoteSelect } = getNoteContext()
@@ -26,7 +26,6 @@ export function Editor() {
                             >
                                 <X />
                             </Button>
-
                             <Title />
                         </CardTitle>
 

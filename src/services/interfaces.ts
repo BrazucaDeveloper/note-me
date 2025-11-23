@@ -26,4 +26,10 @@ interface NoteTag {
     updatedAt: number
 }
 
-export type { Note, Tag, NoteTag }
+type NoteToUpdate = Pick<Partial<Note>, 'title' | 'content' | 'isPined'> & {
+    cid: number
+}
+
+type NoteToUpload = Omit<Note, 'owner' | 'gid'>
+
+export type { Note, Tag, NoteTag, NoteToUpdate, NoteToUpload }

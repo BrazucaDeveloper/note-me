@@ -3,6 +3,7 @@ import { getNoteContext } from '@context/note-context'
 import { IndexDB, type Note } from '@/services/db.client'
 import { cleanObject } from '@/lib/utils'
 import { useAuth } from '@clerk/clerk-react'
+import type { NoteToUpdate } from '@/services/interfaces'
 
 export function useNote() {
     const { userId } = useAuth()
@@ -31,30 +32,26 @@ export function useNote() {
                 .startsWithIgnoreCase(query)
                 .toArray()
 
-            if (!selectedTags || selectedTags.length === 0) {
-                return sortDefault(filteredNotes)
-            }
+            console.log('Capturing notes')
+            notesByTags()
+            return sortDefault(filteredNotes)
 
-            const filteredNotesByTags = await IndexDB.note
-                .where('tags')
-                .anyOf(selectedTags)
-                .toArray()
-
-            const mergedNotes = [...filteredNotes, ...filteredNotesByTags]
-            return sortDefault(mergedNotes)
+            // const filteredNotesByTags = await IndexDB.note.toArray()
+            // const mergedNotes = [...filteredNotes, ...filteredNotesByTags]
+            // return sortDefault(mergedNotes)
         },
         [query, selectedTags],
         []
     )
 
-    const getRecentNotes = async () => {
-        const now = Date.now()
-        const someSecsAgo = now - import.meta.env.VITE_RECENT_TIME_UPDATEAT
+    const notesByTags = async () => {
+        const tags =
+            selectedTags?.map(selectedTag => {
+                return IndexDB.tag.where('title').equalsIgnoreCase(selectedTag)
+            }) ?? []
 
-        return await IndexDB.note
-            .where('updatedAt')
-            .between(someSecsAgo, now, true, true)
-            .toArray()
+        console.dir(tags)
+        // const noteTag = await IndexDB.noteTag.where('note').anyOf(tags.map((tag) => tag.)).toArray()
     }
 
     const sortDefault = (notes: Note[]) => {
@@ -70,11 +67,7 @@ export function useNote() {
         return await IndexDB.note.get(cid)
     }
 
-    const update = async (
-        note: Pick<Partial<Note>, 'title' | 'content' | 'isPined'> & {
-            cid: number
-        }
-    ): Promise<number> => {
+    const update = async (note: NoteToUpdate): Promise<number> => {
         const noteCleaned = cleanObject(note)
 
         return await IndexDB.note.update(note.cid, {
@@ -105,6 +98,5 @@ export function useNote() {
         createNote: create,
         updateNote: update,
         deleteNote: remove,
-        getRecentNotes,
     }
 }

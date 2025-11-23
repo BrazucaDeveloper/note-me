@@ -19,6 +19,7 @@ import {
 } from '../ui/context-menu'
 import { useTag } from '@/hooks/use-tag'
 import { Show } from '../utils'
+import { Hash } from 'lucide-react'
 
 interface NotePeekProps {
     note: Note
@@ -26,11 +27,13 @@ interface NotePeekProps {
 
 export function NotePeek({ note }: NotePeekProps) {
     const { deleteNote, togglePin } = useNote()
-    const { tags, tagsByNote, toggleTagNote } = useTag()
     const { selectedNote, handleNoteSelect } = getNoteContext()
+    const { tags, tagsByNote, handleNoteToSearch, toggleTagNote } = useTag()
 
     const createdAt = new Date(note.createdAt)
     const isRecent = Date.now() - createdAt.getTime() < 1000 * 120
+
+    handleNoteToSearch(note.cid)
 
     return (
         <ContextMenu>
@@ -49,11 +52,21 @@ export function NotePeek({ note }: NotePeekProps) {
                         </div>
                     </header>
 
-                    <span className='line-clamp-2 my-2'>{note.content}</span>
+                    <span className='line-clamp-2 my-2'>
+                        {note.content
+                            ?.replaceAll(/<\/?[^>]+>/g, '')
+                            .slice(0, 90) ?? '...'}
+                    </span>
 
                     <footer className='flex items-center justify-between w-full mt-1'>
                         <div className='flex gap-2'>
                             {isRecent && <Badge>New note</Badge>}
+                            {tagsByNote?.map(tagByNote => (
+                                <Badge variant={'secondary'}>
+                                    <Hash className='-mr-1.5' />{' '}
+                                    {tagByNote?.title}
+                                </Badge>
+                            ))}
                         </div>
                         <span className='text-xs opacity-80'>
                             {createdAt.toLocaleString()}
@@ -74,14 +87,18 @@ export function NotePeek({ note }: NotePeekProps) {
                         <Show
                             condition={!!tags && tags.length > 0}
                             fallback={
-                                <div className='text-gray-500'>No tags</div>
+                                <span className='text-gray-500 p-2 text-sm'>
+                                    <Tags className='inline size-4' /> No
+                                    tags...
+                                </span>
                             }
                         >
                             {tags?.map(tag => (
                                 <ContextMenuCheckboxItem
                                     checked={
                                         tagsByNote?.find(
-                                            tagByNote => tagByNote === tag.cid
+                                            tagByNote =>
+                                                tagByNote?.cid === tag.cid
                                         ) !== undefined
                                     }
                                     onClick={() =>

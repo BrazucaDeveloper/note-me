@@ -6,14 +6,19 @@ import Pin from 'lucide-react/dist/esm/icons/pin'
 import Save from 'lucide-react/dist/esm/icons/save'
 import { Button } from '../ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
+import { useNote } from '@/hooks/use-note'
+import { getNoteContext } from '@/context/note-context'
 
 export function Tools() {
+    const { togglePin } = useNote()
+    const { selectedNote } = getNoteContext()
+
     return (
         <div className='space-x-2'>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Button variant='outline' size='icon'>
-                        <Pin />
+                    <Button variant='outline' size='icon' onClick={() => togglePin(selectedNote!.cid)}>
+                        <Pin className={selectedNote!.isPined ? 'fill-primary' : 'fill-muted'} />
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent className='font-semibold text-sm'>
