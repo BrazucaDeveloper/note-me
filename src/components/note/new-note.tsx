@@ -7,42 +7,37 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 import { Show } from '../utils'
 
 interface NewNoteProps
-    extends ComponentProps<'button'>,
-        VariantProps<typeof buttonVariants> {
-    withTitle?: boolean
+	extends ComponentProps<'button'>,
+		VariantProps<typeof buttonVariants> {
+	withTitle?: boolean
 }
 
 export function NewNote({
-    withTitle = false,
-    variant = 'secondary',
-    ...props
+	withTitle = false,
+	variant = 'secondary',
+	...props
 }: NewNoteProps) {
-    const { createNote } = useNote()
+	const { createNote } = useNote()
 
-    return (
-        <Show
-            condition={!withTitle}
-            fallback={
-                <Button variant={variant} onClick={createNote} {...props}>
-                    <Plus /> Create a new note
-                </Button>
-            }
-        >
-            <Tooltip>
-                <TooltipTrigger asChild>
-                    <Button
-                        size='icon'
-                        variant={variant}
-                        onClick={createNote}
-                        {...props}
-                    >
-                        <Plus />
-                    </Button>
-                </TooltipTrigger>
-                <TooltipContent className='font-semibold text-sm'>
-                    Create a note
-                </TooltipContent>
-            </Tooltip>
-        </Show>
-    )
+	return (
+		<Show
+			condition={!withTitle}
+			fallback={
+				<Button variant={variant} onClick={createNote} {...props}>
+					<Plus /> Create a new note
+				</Button>
+			}
+		>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<Button size='icon' variant={variant} onClick={createNote} {...props}>
+						<Plus />
+					</Button>
+				</TooltipTrigger>
+				<TooltipContent className='font-semibold text-sm'>
+					Create a note
+				</TooltipContent>
+			</Tooltip>
+		</Show>
+	)
 }

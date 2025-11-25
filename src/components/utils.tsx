@@ -1,46 +1,20 @@
 import React from 'react'
 
 interface ShowProps {
-    fallback: React.ReactNode
-    children: React.ReactNode
-    condition: boolean
+	fallback?: React.ReactNode
+	children: React.ReactNode
+	condition: boolean
 }
 
-export function Show({ condition, fallback, children }: ShowProps) {
-    return condition ? children : fallback
+export function Show({ condition, fallback = <></>, children }: ShowProps) {
+	return condition ? children : fallback
 }
 
-export default class ErrorBoundary extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = { hasError: false }
-    }
+interface ForProps<T> {
+	each: T[] | undefined
+	children: (item: T, index: number) => React.ReactNode
+}
 
-    static getDerivedStateFromError(error) {
-        // Update state so the next render will show the fallback UI.
-        return { hasError: true }
-    }
-
-    componentDidCatch(error, info) {
-        console.error(
-            error,
-            // Example "componentStack":
-            //   in ComponentThatThrows (created by App)
-            //   in ErrorBoundary (created by App)
-            //   in div (created by App)
-            //   in App
-            info.componentStack,
-            // Warning: `captureOwnerStack` is not available in production.
-            React.captureOwnerStack()
-        )
-    }
-
-    render() {
-        if (this.state.hasError) {
-            // You can render any custom fallback UI
-            return this.props.fallback
-        }
-
-        return this.props.children
-    }
+export function For<T>({ each, children }: ForProps<T>) {
+	return <>{each?.map(children)}</>
 }
