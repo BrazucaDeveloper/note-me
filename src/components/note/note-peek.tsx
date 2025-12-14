@@ -1,6 +1,6 @@
 import { useNote } from '@/hooks/use-note'
 import { useTag } from '@/hooks/use-tag'
-import { isEmpty, stringClear } from '@/lib/utils'
+import { isEmpty } from '@/lib/utils'
 import type { Note } from '@/services/db.client'
 import Hash from 'lucide-react/dist/esm/icons/hash'
 import Pin from 'lucide-react/dist/esm/icons/pin'
@@ -22,6 +22,7 @@ import {
 } from '../ui/context-menu'
 import { SidebarMenuButton } from '../ui/sidebar'
 import { For, Show } from '../utils'
+import { NoteSpoiler } from './note-spoiler'
 
 interface NotePeekProps {
 	note: Note
@@ -54,7 +55,7 @@ export function NotePeek({ note }: NotePeekProps) {
 						</div>
 					</header>
 
-					<span className='line-clamp-2 my-2'>{stringClear(note.content)}</span>
+					<NoteSpoiler content={note.content} />
 
 					<footer className='flex items-center justify-between w-full mt-1'>
 						<div className='flex gap-2'>

@@ -11,10 +11,11 @@ export function useNote() {
 
 	const create = async (): Promise<number> => {
 		return await IndexDB.note.add({
+			gid: null,
 			title: 'Give a title to your new note :)',
 			content: '🌱 Sprout your ideias here!',
 			isPined: false,
-			owner: Number(userId) || undefined,
+			owner: Number(userId) || null,
 			createdAt: Date.now(),
 			updatedAt: Date.now(),
 		})

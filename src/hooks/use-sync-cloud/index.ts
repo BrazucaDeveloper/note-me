@@ -1,23 +1,16 @@
 import { turso } from '@/services/db.server'
 import type { NoteToUpload } from '@/services/interfaces'
 import { useAuth } from '@clerk/clerk-react'
+import { sqlQuerys } from './sql-querys'
 
 export function useSyncCloud() {
 	const { userId } = useAuth()
+	const { uploadNoteQuery } = sqlQuerys
 
 	const uploadNotes = async (note: NoteToUpload) => {
 		if (!userId) return
 		const rs = await turso.execute({
-			sql: `
-            INSERT INTO note (cid, title, content, isPined, owner, createdAt, updatedAt)
-              VALUES (?, ?, ?, ?, ?, ?, ?)
-            ON CONFLICT(owner) DO UPDATE SET
-              title = excluded.title,
-              content = excluded.content,
-              isPined = excluded.isPined,
-              createdAt = excluded.createdAt,
-              updatedAt = excluded.updatedAt;
-          `,
+			sql: uploadNoteQuery,
 			args: [
 				note.cid,
 				note.title,

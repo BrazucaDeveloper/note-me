@@ -1,12 +1,12 @@
 import { useDebounce } from '@/hooks/use-debounce'
 import type { Note } from '@/services/db.client'
 import {
-    createContext,
-    useContext,
-    useEffect,
-    useReducer,
-    useState,
-    useTransition,
+	createContext,
+	useContext,
+	useEffect,
+	useReducer,
+	useState,
+	useTransition,
 } from 'react'
 
 interface SaveReducerAction {
@@ -15,8 +15,8 @@ interface SaveReducerAction {
 }
 
 interface SaveReducerState {
-	localSaved: boolean
-	remoteSaved: boolean
+	localSaved: boolean | null
+	remoteSaved: boolean | null
 }
 
 interface NoteContextProps {
@@ -36,8 +36,6 @@ interface NoteContextProps {
 
 const NoteContext = createContext({} as NoteContextProps)
 
-const ANIMATION_DURATION = 3500
-
 const NoteProvider = ({ children }: { children: React.ReactNode }) => {
 	const [selectedTags, setSelectedTag] = useState<string[]>([])
 	const handleTagsSelected = (tags: string[]) => setSelectedTag(tags)
@@ -49,7 +47,7 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
 	const handleQueryChange = useDebounce((newQuery: string) => {
 		setQuery(newQuery.trim())
 	}, 500)
-	
+
 	const [isEditorEnabled, setIsEditorEnabled] = useState<boolean>(true)
 	const handleToggleIsEditorEnabled = () => setIsEditorEnabled(!isEditorEnabled)
 
@@ -62,7 +60,7 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
 			case 'SET_REMOTE_SAVED':
 				return { ...state, remoteSaved: action.payload ?? false }
 			case 'RESET_SAVED':
-				return { localSaved: false, remoteSaved: false }
+				return { localSaved: null, remoteSaved: null }
 			default:
 				return state
 		}
@@ -83,7 +81,7 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
 	useEffect(() => {
 		const id = setTimeout(
 			() => setIsSaved({ type: 'RESET_SAVED' }),
-			ANIMATION_DURATION
+			import.meta.env.VITE_TRANSITION_DURATION
 		)
 		return () => clearTimeout(id)
 	}, [isSaved.localSaved, isSaved.remoteSaved])

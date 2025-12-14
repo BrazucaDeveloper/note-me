@@ -10,8 +10,9 @@ export function useTag(noteIdToSearch: number | null = null) {
 
 	const create = async (title: string) => {
 		return await IndexDB.tag.put({
+			gid: null,
 			title,
-			owner: Number(userId) || undefined,
+			owner: Number(userId) || null,
 			createdAt: Date.now(),
 			updatedAt: Date.now(),
 		})
@@ -60,7 +61,7 @@ export function useTag(noteIdToSearch: number | null = null) {
 			tag,
 			createdAt: now,
 			updatedAt: now,
-			owner: Number(userId) || undefined,
+			owner: Number(userId) || null,
 		})
 	}
 

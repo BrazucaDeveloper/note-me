@@ -1,19 +1,19 @@
 interface Note {
 	cid: number // client ID
-	gid?: number // global ID
+	gid: number | null // global ID
 	title: string
-	content?: string
+	content: string | null
 	isPined: boolean
-	owner?: number // user global ID
+	owner: number | null // user global ID
 	createdAt: number
 	updatedAt: number
 }
 
 interface Tag {
 	cid: number // client ID
-	gid?: number // global ID
+	gid: number | null // global ID
 	title: string
-	owner?: number // user global ID
+	owner: number | null // user global ID
 	createdAt: number
 	updatedAt: number
 }
@@ -21,7 +21,7 @@ interface Tag {
 interface NoteTag {
 	note: number // note client ID
 	tag: number // tag client ID
-	owner?: number // global user ID
+	owner: number | null // global user ID
 	createdAt: number
 	updatedAt: number
 }

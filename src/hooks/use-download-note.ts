@@ -1,0 +1,51 @@
+import { useEffect, useState } from 'react'
+import { useNote } from './use-note'
+import type { Note } from '@/services/interfaces'
+
+export function useDownloadNote() {
+	const { findNoteById } = useNote()
+	const [hasDownloaded, setHasDownloaded] = useState<boolean | null>(null)
+
+	useEffect(() => {
+		if (hasDownloaded !== null) {
+			const timer = setTimeout(
+				() => setHasDownloaded(null),
+				import.meta.env.VITE_TRANSITION_DURATION
+			)
+			return () => clearTimeout(timer)
+		}
+	}, [hasDownloaded])
+
+	const toMarkdown = (note: Note) => {
+		return `# **${note.title}**`
+			.concat(`\n\n${note.content}\n\n`)
+			.concat(
+				`> 🌱 Note created with _note.me_ at: ${note.createdAt.toLocaleString()}  \n`
+			)
+			.concat(
+				`> 🌠 Please, give a star on project acessing https://github.com/BrazucaDeveloper/note-me`
+			)
+	}
+
+	const downloadNote = async (cid: number): Promise<void> => {
+		const note = await findNoteById(cid)
+		if (!note) return
+		const markdown = toMarkdown(note)
+
+		try {
+			const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' })
+			const url = URL.createObjectURL(blob)
+			const a = document.createElement('a')
+			a.href = url
+			a.download = `${note.title.replaceAll(' ', '_')}.note_me.md`
+			a.click()
+			URL.revokeObjectURL(url)
+		} catch (error) {
+			console.error(error)
+			setHasDownloaded(false)
+		}
+		setHasDownloaded(true)
+	}
+
+	return { downloadNote, hasDownloaded }
+}

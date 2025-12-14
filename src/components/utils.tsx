@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface ShowProps {
 	fallback?: React.ReactNode
 	children: React.ReactNode

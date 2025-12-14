@@ -10,6 +10,7 @@ interface ImportMetaEnv {
 	readonly VITE_NOTE_LOCAL_AUTOSAVE_DELAY: number
 	readonly VITE_NOTE_CLOUD_AUTOSAVE_DELAY: number
 	readonly VITE_RECENT_TIME_UPDATE_AT: number
+	readonly VITE_TRANSITION_DURATION: number
 }
 
 interface ImportMeta {

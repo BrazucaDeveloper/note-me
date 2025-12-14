@@ -27,7 +27,7 @@ export function Title() {
 			defaultValue={selectedNote?.title}
 			onChange={handleTitleChangeDebounced}
 			placeholder='Give a title to your note :p'
-			className='text-xl border-none outline-0 flex-1 mr-8 w-max min-w-96'
+			className='text-2xl border-none outline-0 flex-1 ml-2 mr-8 w-max min-w-96 font-semibold'
 		/>
 	)
 }

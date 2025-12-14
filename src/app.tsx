@@ -14,7 +14,7 @@ export default function App() {
 		>
 			<NoteProvider>
 				<SidebarProvider>
-					<div className='flex h-dvh w-dvw subpixel-antialiased'>
+					<div className='flex h-dvh max-h-screen w-dvw subpixel-antialiased'>
 						<Aside />
 						<Editor />
 					</div>
