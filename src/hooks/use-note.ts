@@ -2,7 +2,7 @@ import { cleanObject } from '@/lib/utils'
 import { IndexDB, type Note } from '@/services/db.client'
 import type { NoteToUpdate } from '@/services/interfaces'
 import { useAuth } from '@clerk/clerk-react'
-import { getNoteContext } from '@context/note-context'
+import { getNoteContext } from '@/global/note-context.tsx'
 import { useLiveQuery } from 'dexie-react-hooks'
 
 export function useNote() {

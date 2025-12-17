@@ -24,7 +24,14 @@ export function useSyncCloud() {
 		console.log(`Note '${note.cid}' saved :p \n`, rs.toJSON())
 	}
 
-	const downloadNotes = () => {}
+	const downloadNotes = async () => {
+		if (!userId) return
+		const rs = await turso.execute({
+			sql: 'SELECT * FROM note WHERE owner = ?',
+			args: [userId],
+		})
+		console.log(`Notes downloaded :p \n`, rs.toJSON())
+	}
 
 	const uploadTags = () => {}
 

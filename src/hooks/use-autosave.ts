@@ -2,7 +2,7 @@ import { useDebounce } from '@/hooks/use-debounce'
 import { useNote } from '@/hooks/use-note'
 import { useSyncCloud } from '@/hooks/use-sync-cloud'
 import { useAuth } from '@clerk/clerk-react'
-import { getNoteContext } from '@context/note-context'
+import { getNoteContext } from '@/global/note-context.tsx'
 import type { EditorEvents } from '@tiptap/react'
 
 export function useAutoSave() {
@@ -36,8 +36,10 @@ export function useAutoSave() {
 	return ({ editor }: EditorEvents['update']) => {
 		try {
 			if (!selectedNote) return
-			localSave(editor.getHTML())
-			if (isSignedIn) remoteSave(editor.getHTML())
+			const content = editor.getHTML()
+
+			localSave(content)
+			if (isSignedIn) remoteSave(content)
 		} catch (error) {
 			console.error('Error during autosave:', error)
 		}

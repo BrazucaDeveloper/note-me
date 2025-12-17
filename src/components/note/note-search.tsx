@@ -1,6 +1,6 @@
 import { Input } from '../ui/input'
-import { getNoteContext } from '../../context/note-context'
 import Search from 'lucide-react/dist/esm/icons/search'
+import { getNoteContext } from '@/global/note-context.tsx'
 
 export function NoteSearch() {
 	const { handleQueryChange } = getNoteContext()

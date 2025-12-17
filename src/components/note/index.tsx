@@ -7,7 +7,7 @@ import { SidebarMenu, SidebarMenuItem } from '../ui/sidebar'
 import { NewNote } from './new-note'
 import { NotePeek } from './note-peek'
 import { For, Show } from '../utils'
-import { MyTags } from './my-tags'
+import { MyTags } from '../tags'
 import { isEmpty } from '@/lib/utils'
 
 export function MyNotes() {

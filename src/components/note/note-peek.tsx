@@ -7,7 +7,7 @@ import Pin from 'lucide-react/dist/esm/icons/pin'
 import PinOff from 'lucide-react/dist/esm/icons/pin-off'
 import Tags from 'lucide-react/dist/esm/icons/tags'
 import Trash from 'lucide-react/dist/esm/icons/trash'
-import { getNoteContext } from '../../context/note-context'
+import { getNoteContext } from '@/global/note-context.tsx'
 import { PinIcon } from '../icons/pin'
 import { Badge } from '../ui/badge'
 import {

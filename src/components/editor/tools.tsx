@@ -1,4 +1,4 @@
-import { getNoteContext } from '@/context/note-context'
+import { getNoteContext } from '@/global/note-context.tsx'
 import { useNote } from '@/hooks/use-note'
 import { useDownloadNote } from '@/hooks/use-download-note'
 import { useAuth } from '@clerk/clerk-react'

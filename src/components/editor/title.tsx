@@ -1,7 +1,7 @@
 import { useDebounce } from '@/hooks/use-debounce'
 import { useNote } from '@/hooks/use-note'
 import { type ChangeEvent } from 'react'
-import { getNoteContext } from '@context/note-context'
+import { getNoteContext } from '@/global/note-context.tsx'
 
 export function Title() {
 	const { selectedNote } = getNoteContext()
