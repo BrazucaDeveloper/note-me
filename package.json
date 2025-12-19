@@ -1,8 +1,12 @@
 {
 	"name": "note-me",
 	"private": true,
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"type": "module",
+	"author": {
+    "name": "BrazucaDeveloper",
+    "url": "https://github.com/BrazucaDeveloper"
+	},
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",

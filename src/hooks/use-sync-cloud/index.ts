@@ -8,20 +8,26 @@ export function useSyncCloud() {
 	const { uploadNoteQuery } = sqlQuerys
 
 	const uploadNotes = async (note: NoteToUpload) => {
-		if (!userId) return
-		const rs = await turso.execute({
-			sql: uploadNoteQuery,
-			args: [
-				note.cid,
-				note.title,
-				note.content || null,
-				note.isPined,
-				userId!,
-				note.createdAt,
-				note.updatedAt,
-			],
-		})
-		console.log(`Note '${note.cid}' saved :p \n`, rs.toJSON())
+		if (!userId) return 0
+		try {
+  		const rs = await turso.execute({
+  			sql: uploadNoteQuery,
+  			args: [
+  				note.cid,
+  				note.title,
+  				note.content || null,
+  				note.isPined,
+  				userId!,
+  				note.createdAt,
+  				note.updatedAt,
+  			],
+  		})
+  		console.log(`Note '${note.cid}' saved :p \n`, rs.toJSON())
+  		return note.cid
+		} catch (error) {
+			console.error('Error uploading note:', error)
+			return 0
+		}
 	}
 
 	const downloadNotes = async () => {

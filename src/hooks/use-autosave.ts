@@ -26,8 +26,12 @@ export function useAutoSave() {
 	const remoteSave = useDebounce(
 		(htmlContent: string) => {
 			startSaving(async () => {
-				await upload.note({ ...selectedNote!, content: htmlContent })
-				handleIsSaved(true, 'remote')
+				const id = await upload.note({
+				  ...selectedNote!,
+					content: htmlContent
+				})
+				const hasUpdated = id > 0
+				handleIsSaved(hasUpdated, 'remote')
 			})
 		},
 		import.meta.env.VITE_NOTE_CLOUD_AUTOSAVE_DELAY

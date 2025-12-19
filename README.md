@@ -45,6 +45,10 @@ pnpm build && pnpm preview
 - 🧹 [Biome](https://biomejs.dev/) - Formatador de código
 - 💾 [Dexie](https://dexie.org/) - Biblioteca para acessar o IndexDB
 
+## **🥸 Creator**
+
+- 🧑‍💻 [BrazucaDeveloper](https://github.com/BrazucaDeveloper) | Full Stack Developer
+
 ## **📝 License**
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para obter detalhes.

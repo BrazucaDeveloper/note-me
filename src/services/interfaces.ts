@@ -7,6 +7,7 @@ interface Note {
 	owner: number | null // user global ID
 	createdAt: number
 	updatedAt: number
+	status: 'active' | 'trashed'
 }
 
 interface Tag {
@@ -16,6 +17,7 @@ interface Tag {
 	owner: number | null // user global ID
 	createdAt: number
 	updatedAt: number
+	status: 'active' | 'trashed'
 }
 
 interface NoteTag {
