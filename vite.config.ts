@@ -11,16 +11,16 @@ export default defineConfig({
             "@context": path.resolve(__dirname, "./src/context"),
         },
     },
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes("node_modules")) {
-              return "vendor";
-            }
-            return null
-          },
-        },
-      },
-    }
+    // build: {
+    //   rollupOptions: {
+    //     output: {
+    //       manualChunks(id) {
+    //         if (id.includes("node_modules")) {
+    //           return "vendor";
+    //         }
+    //         return null
+    //       },
+    //     },
+    //   },
+    // }
 });

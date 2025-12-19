@@ -22,20 +22,19 @@ export function useNote() {
 	}
 
 	const notes = useLiveQuery(async () => {
-		if (query === '' && selectedTags.length === 0)
+		if (query === '' && selectedTags.has('0'))
 			return sortDefault(await IndexDB.note.toArray())
 
 		let result: Note[] = []
 		if (query !== '') {
 			result = await IndexDB.note
-				.where('title')
-				.startsWithIgnoreCase(query)
+				.filter(note => note.title.toLowerCase().includes(query.toLowerCase()))
 				.toArray()
 		}
 
-		if (selectedTags.length > 0) {
+		if (!selectedTags.has('0')) {
 			const noteTag = await IndexDB.noteTag
-				.filter(item => selectedTags.includes(item.tag.toString()))
+				.filter(item => selectedTags.has(item.tag.toString()))
 				.toArray()
 			const notesByTag = (
 				await IndexDB.note.bulkGet(noteTag.map(item => item.note))
@@ -44,7 +43,7 @@ export function useNote() {
 			result = [...result, ...notesByTag]
 		}
 		return sortDefault(result)
-	}, [query, selectedTags.length])
+	}, [query, selectedTags.size])
 
 	const sortDefault = (notes: Note[]) => {
 		return notes.sort((a, b) => {

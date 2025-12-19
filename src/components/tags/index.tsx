@@ -10,14 +10,17 @@ export function MyTags() {
 
 	return (
 		<div className='flex flex-wrap gap-2 pl-1 pt-2'>
-			<Tag selected={selectedTags.has('0')} onChangeSelect={handleTagsSelected} />
+			<Tag
+				selected={selectedTags.has('0')}
+				onChangeSelect={handleTagsSelected}
+			/>
 			<For each={tags}>
 				{tag => (
 					<Tag
-            tag={tag}
-            key={tag.cid}
-            onChangeSelect={handleTagsSelected}
-            selected={selectedTags.has(tag.cid.toString())}
+						tag={tag}
+						key={tag.cid}
+						onChangeSelect={handleTagsSelected}
+						selected={selectedTags.has(tag.cid.toString())}
 					/>
 				)}
 			</For>

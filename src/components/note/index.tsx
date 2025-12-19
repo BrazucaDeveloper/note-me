@@ -16,8 +16,7 @@ export function MyNotes() {
 	return (
 		<div className='flex flex-col flex-1 gap-2 min-h-0 mt-4 px-2 pl-4'>
 			<h5>
-				<Tags className='size-4.5 stroke-[1.5px] inline mr-1.5' />
-				Your tags
+				<Tags className='size-4.5 stroke-[1.5px] inline mr-1.5' /> Your tags
 			</h5>
 			<MyTags />
 
@@ -31,7 +30,7 @@ export function MyNotes() {
 				<NewNote size='sm' />
 			</div>
 			<Show
-				condition={isEmpty(notes)}
+				condition={!isEmpty(notes)}
 				fallback={
 					<div className='flex flex-col items-center justify-center gap-2 h-full opacity-50'>
 						<span className='font-semibold text-lg'>

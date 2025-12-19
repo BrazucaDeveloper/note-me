@@ -32,8 +32,8 @@ export const getProviders = () => {
 		setTagsSelected(prev => {
 			if (cid === '0') return new Set('0')
 
+			prev.delete('0')
 			const newSet = new Set(prev)
-			newSet.delete('0')
 			newSet.has(cid) ? newSet.delete(cid) : newSet.add(cid)
 			return newSet
 		})
