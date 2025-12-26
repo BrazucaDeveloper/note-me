@@ -30,8 +30,7 @@ export function Aside() {
 						<UserButton
 							appearance={{
 								elements: {
-									userButtonBox:
-										'px-4 py-3 rounded-lg bg-secondary/70 *:text-primary *:font-medium hover:bg-primary hover:*:text-primary-foreground transition-colors w-full border border-border',
+									userButtonBox: 'p-0.5 rounded-full border border-primary',
 								},
 							}}
 						/>

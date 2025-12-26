@@ -8,7 +8,7 @@ import {
 import { useEffect, useReducer, useState, useTransition } from 'react'
 
 import { useDebounce } from '@/hooks/use-debounce'
-import type { Note } from '@/services/interfaces'
+import type { Note } from '@/data/interfaces'
 
 export const getProviders = () => {
 	const [isSaving, startSaving] = useTransition()

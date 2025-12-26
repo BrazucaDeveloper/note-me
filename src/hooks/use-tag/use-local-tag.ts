@@ -1,36 +1,20 @@
-import { useLiveQuery } from 'dexie-react-hooks'
-import { IndexDB } from '@/services/db.client'
+import { IndexDB } from '@/data/db.client'
 import { useAuth } from '@clerk/clerk-react'
 import Dexie from 'dexie'
-import { useRef } from 'react'
 
-export function useTag(noteIdToSearch: number | null = null) {
+export function useLocalTag() {
 	const { userId } = useAuth()
-	const noteIdToSearchRef = useRef<number | null>(noteIdToSearch)
 
 	const create = async (title: string) => {
 		return await IndexDB.tag.put({
 			gid: null,
 			title,
+			status: 'active',
 			owner: Number(userId) || null,
 			createdAt: Date.now(),
 			updatedAt: Date.now(),
 		})
 	}
-
-	const tags = useLiveQuery(async () => await IndexDB.tag.toArray(), [])
-
-	const tagsByNote = useLiveQuery(async () => {
-		if (!noteIdToSearchRef.current) return []
-		const noteTag = await IndexDB.noteTag
-			.where('note')
-			.equals(noteIdToSearchRef.current)
-			.toArray()
-		return await IndexDB.tag.bulkGet(noteTag.map(item => item.tag))
-	}, [noteIdToSearchRef.current])
-
-	const handleNoteToSearch = (note: number | null) =>
-		(noteIdToSearchRef.current = note)
 
 	const update = async (cid: number, title: string) => {
 		return await IndexDB.tag.update(cid, {
@@ -66,12 +50,9 @@ export function useTag(noteIdToSearch: number | null = null) {
 	}
 
 	return {
-		tags,
-		toggleTagNote,
-		tagsByNote,
-		handleNoteToSearch,
-		createTag: create,
-		updateTag: update,
-		removeTag: remove,
+		toggleLocalTagNote: toggleTagNote,
+		createLocalTag: create,
+		updateLocalTag: update,
+		removeLocalTag: remove,
 	}
 }

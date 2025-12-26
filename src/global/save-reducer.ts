@@ -8,6 +8,16 @@ type SaveReducerAction =
 	| { type: 'SET_REMOTE_SAVED'; payload: boolean }
 	| { type: 'RESET_SAVED' }
 
+const setLocalSaved = (payload: boolean): SaveReducerAction => ({
+	type: 'SET_LOCAL_SAVED',
+	payload,
+})
+const setRemoteSaved = (payload: boolean): SaveReducerAction => ({
+	type: 'SET_REMOTE_SAVED',
+	payload,
+})
+const resetSaved = (): SaveReducerAction => ({ type: 'RESET_SAVED' })
+
 const saveReducer = (
 	state: SaveReducerState,
 	action: SaveReducerAction
@@ -23,16 +33,6 @@ const saveReducer = (
 			return state
 	}
 }
-
-const setLocalSaved = (payload: boolean): SaveReducerAction => ({
-	type: 'SET_LOCAL_SAVED',
-	payload,
-})
-const setRemoteSaved = (payload: boolean): SaveReducerAction => ({
-	type: 'SET_REMOTE_SAVED',
-	payload,
-})
-const resetSaved = (): SaveReducerAction => ({ type: 'RESET_SAVED' })
 
 export {
 	saveReducer,

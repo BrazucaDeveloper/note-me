@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useNote } from './use-note'
-import type { Note } from '@/services/interfaces'
+import type { Note } from '@/data/interfaces'
 
-export function useDownloadNote() {
-	const { findNoteById } = useNote()
+export function useDownloadNote(note: Note) {
 	const [hasDownloaded, setHasDownloaded] = useState<boolean | null>(null)
 
 	useEffect(() => {
@@ -16,7 +14,7 @@ export function useDownloadNote() {
 		}
 	}, [hasDownloaded])
 
-	const toMarkdown = (note: Note) => {
+	const toMarkdown = () => {
 		return `# **${note.title}**`
 			.concat(`\n\n${note.content}\n\n`)
 			.concat(
@@ -27,10 +25,9 @@ export function useDownloadNote() {
 			)
 	}
 
-	const downloadNote = async (cid: number): Promise<void> => {
-		const note = await findNoteById(cid)
-		if (!note) return
-		const markdown = toMarkdown(note)
+	const downloadNote = () => {
+		if (!note) return null
+		const markdown = toMarkdown()
 
 		try {
 			const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' })

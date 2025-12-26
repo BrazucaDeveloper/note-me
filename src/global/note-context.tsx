@@ -1,4 +1,4 @@
-import type { Note } from '@/services/db.client'
+import type { Note } from '@/data/db.client'
 import { createContext, useContext } from 'react'
 import { getProviders } from './note-providers'
 import type { SaveReducerState } from './save-reducer'

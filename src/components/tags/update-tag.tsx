@@ -1,5 +1,5 @@
 import { useTag } from '@/hooks/use-tag'
-import type { Tag } from '@/services/interfaces'
+import type { Tag } from '@/data/interfaces'
 import { useEffect, useRef, type ComponentRef } from 'react'
 
 interface UpdateTagProps {

@@ -7,20 +7,24 @@ import Download from 'lucide-react/dist/esm/icons/download'
 import Eye from 'lucide-react/dist/esm/icons/eye'
 import PenBox from 'lucide-react/dist/esm/icons/pen-box'
 import Save from 'lucide-react/dist/esm/icons/save'
+import Cloud from 'lucide-react/dist/esm/icons/cloud'
 import { PinIcon } from '../icons/pin'
 import { Button } from '../ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 
 export function Tools() {
-	const { togglePin } = useNote()
-	const { isSignedIn } = useAuth()
-	const { downloadNote, hasDownloaded } = useDownloadNote()
 	const {
-		selectedNote,
 		isSaved,
-		handleToggleIsEditorEnabled,
+		selectedNote,
 		isEditorEnabled,
+		handleToggleIsEditorEnabled,
 	} = getNoteContext()
+
+	if (!selectedNote) return <></>
+
+	const { isSignedIn } = useAuth()
+	const { toggleIsPinned } = useNote()
+	const { downloadNote, hasDownloaded } = useDownloadNote(selectedNote)
 
 	return (
 		<div className='ml-auto space-x-2 pr-4'>
@@ -29,7 +33,7 @@ export function Tools() {
 					<Button
 						size='icon'
 						variant='outline'
-						onClick={() => togglePin(selectedNote!.cid)}
+						onClick={() => toggleIsPinned()}
 					>
 						<PinIcon variant={selectedNote?.isPined ? 'filled' : 'outline'} />
 					</Button>
@@ -59,8 +63,8 @@ export function Tools() {
 					<Button
 						size='icon'
 						variant='outline'
+						onClick={downloadNote}
 						data-downloaded={hasDownloaded || 'null'}
-						onClick={() => downloadNote(selectedNote!.cid)}
 						className='data-[downloaded=true]:bg-primary data-[downloaded=true]:dark:bg-primary data-[downloaded=false]:bg-destructive data-[downloaded=false]:dark:bg-destructive data-[downloaded=null]:text-primary text-primary-foreground duration-400 transition-all'
 					>
 						<Download />
@@ -91,12 +95,12 @@ export function Tools() {
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<Button
-						variant='secondary'
-						data-isSignedIn={isSignedIn}
-						className='data-[isSignedIn=false]:opacity-65'
 						size='icon'
+						variant='secondary'
+						data-issignedin={isSignedIn}
+						className='data-[issignedin=false]:opacity-65'
 					>
-						<CloudOff />
+						{isSignedIn ? <Cloud /> : <CloudOff />}
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent className='font-semibold text-sm'>

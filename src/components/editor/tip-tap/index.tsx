@@ -3,17 +3,15 @@ import StarterKit from '@tiptap/starter-kit'
 import { getNoteContext } from '@/global/note-context'
 import { BubbleMenu } from './bubble-menu'
 import { Fragment } from 'react/jsx-runtime'
-import { useAutoSave } from '@/hooks/use-autosave'
 
 export default function Tiptap() {
-	const autosave = useAutoSave()
 	const { selectedNote, isEditorEnabled } = getNoteContext()
 
 	const editor = useEditor(
 		{
 			extensions: [StarterKit],
 			content: selectedNote?.content,
-			onUpdate: autosave,
+			onUpdate: console.log,
 			editable: isEditorEnabled,
 		},
 		[isEditorEnabled]

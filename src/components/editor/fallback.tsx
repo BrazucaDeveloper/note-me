@@ -1,10 +1,4 @@
-import {
-	SignedIn,
-	SignedOut,
-	SignInButton,
-	SignOutButton,
-} from '@clerk/clerk-react'
-import { LogOut } from 'lucide-react'
+import { SignedIn, SignedOut, SignInButton } from '@clerk/clerk-react'
 import Cloud from 'lucide-react/dist/esm/icons/cloud'
 import Sprout from 'lucide-react/dist/esm/icons/sprout'
 import { NewNote } from '../note/new-note'
@@ -30,13 +24,6 @@ export function Fallback() {
 
 			<div className='flex items-center gap-4'>
 				<NewNote withTitle={true} variant='outline' size='lg' />
-				<SignedIn>
-					<SignOutButton>
-						<Button variant='destructive'>
-							<LogOut /> Sign out
-						</Button>
-					</SignOutButton>
-				</SignedIn>
 				<SignedOut>
 					<SignInButton mode='modal'>
 						<Button>
