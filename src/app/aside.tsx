@@ -5,11 +5,11 @@ import {
 	UserButton,
 } from '@clerk/clerk-react'
 import User from 'lucide-react/dist/esm/icons/user'
-import { Logo } from './logo'
+import { Logo } from '../components/logo'
 import { MyNotes } from './note'
 import { NoteSearch } from './note/note-search'
-import { Button } from './ui/button'
-import { Sidebar, SidebarContent, SidebarHeader } from './ui/sidebar'
+import { Button } from '../components/ui/button'
+import { Sidebar, SidebarContent, SidebarHeader } from '../components/ui/sidebar'
 
 export function Aside() {
 	return (

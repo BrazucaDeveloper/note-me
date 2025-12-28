@@ -1,11 +1,11 @@
-import { useTag } from '@/hooks/use-tag'
+// import { useTag } from '@/hooks/use-tag'
 import { X } from 'lucide-react'
 import Hash from 'lucide-react/dist/esm/icons/hash'
-import { Badge } from '../ui/badge'
 import type { Tag } from '@/data/interfaces'
-import { Show } from '../utils'
 import { useRef, useState } from 'react'
 import { UpdateTag } from './update-tag'
+import { Badge } from '@/components/ui/badge'
+import { Show } from '@/components/utils'
 
 interface TagProps {
 	tag?: Tag
@@ -14,7 +14,6 @@ interface TagProps {
 }
 
 export function Tag({ tag, selected, onChangeSelect }: TagProps) {
-	const { removeTag } = useTag()
 	const lastClickTimestampRef = useRef<number>(0)
 	const [isEditable, setIsEditable] = useState<boolean>(false)
 
@@ -45,7 +44,7 @@ export function Tag({ tag, selected, onChangeSelect }: TagProps) {
 						className='size-3 hover:text-destructive'
 						onClick={e => {
 							e.stopPropagation()
-							removeTag(tag!.cid)
+							// toggle status to trashed
 						}}
 					/>
 				</button>

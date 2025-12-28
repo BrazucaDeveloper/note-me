@@ -1,11 +1,11 @@
 import { getNoteContext } from '@/global/note-context.tsx'
-import { useTag } from '@/hooks/use-tag'
-import { For } from '../utils'
 import { Tag } from './tag'
 import { NewTag } from './new-tag'
+import { useLiveQueryTag } from '@/hooks/use-live-query/tag'
+import { For } from '@/components/utils'
 
 export function MyTags() {
-	const { tags } = useTag()
+	const { tags } = useLiveQueryTag()
 	const { handleTagsSelected, selectedTags } = getNoteContext()
 
 	return (

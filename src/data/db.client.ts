@@ -8,7 +8,7 @@ const IndexDB = new Dexie('db.note.me') as Dexie & {
 }
 
 IndexDB.version(1).stores({
-	note: '++cid, gid, title, content, isPined, owner, createdAt, updatedAt',
+	note: '++cid, gid, title, content, isPinned, owner, createdAt, updatedAt',
 	tag: '++cid, gid, title, owner, createdAt, updatedAt',
 	noteTag: '[note+tag], gid, createdAt, updatedAt',
 })

@@ -2,9 +2,9 @@ import type { VariantProps } from 'class-variance-authority'
 import Plus from 'lucide-react/dist/esm/icons/plus'
 import type { ComponentProps } from 'react'
 import { useNote } from '@/hooks/use-note'
-import { Button, type buttonVariants } from '../ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
-import { Show } from '../utils'
+import { Button, type buttonVariants } from '@/components/ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Show } from '@/components/utils'
 
 interface NewNoteProps
 	extends ComponentProps<'button'>,

@@ -1,19 +1,16 @@
 import { cleanObject } from '@/lib/utils'
 import { IndexDB } from '@/data/db.client'
 import type { Note } from '@/data/interfaces'
-import { useDebounce } from '../use-debounce'
+// import { useDebounce } from '../use-debounce'
 
 export function useLocalNote() {
-	const create = useDebounce(async (note: Omit<Note, 'cid'>) => {
+	const create = async (note: Omit<Note, 'cid'>) => {
 		return await IndexDB.note.add(note)
-	}, 500)
+	}
 
 	const update = async (note: Partial<Note> & { cid: number }) => {
 		const noteCleaned = cleanObject(note)
-		return await IndexDB.note.update(note.cid, {
-			...noteCleaned,
-			updatedAt: Date.now(),
-		})
+		return await IndexDB.note.update(note.cid, noteCleaned)
 	}
 
 	const read = async (cid?: number) => {

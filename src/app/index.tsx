@@ -1,8 +1,8 @@
+import { SidebarProvider } from '@/components/ui/sidebar'
+import { NoteProvider } from '@/global/note-context'
 import { ClerkProvider } from '@clerk/clerk-react'
-import { Aside } from './components/aside'
-import { Editor } from './components/editor'
-import { NoteProvider } from './global/note-context'
-import { SidebarProvider } from './components/ui/sidebar'
+import { Editor } from './editor'
+import { Aside } from './aside'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 

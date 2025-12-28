@@ -1,11 +1,11 @@
 import NotebookText from 'lucide-react/dist/esm/icons/notebook-text'
 import Tags from 'lucide-react/dist/esm/icons/tags'
-import { ScrollArea } from '../ui/scroll-area'
-import { Separator } from '../ui/separator'
-import { SidebarMenu, SidebarMenuItem } from '../ui/sidebar'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Separator } from '@/components/ui/separator'
+import { SidebarMenu, SidebarMenuItem } from '@/components/ui/sidebar'
 import { NewNote } from './new-note'
 import { NotePeek } from './note-peek'
-import { For, Show } from '../utils'
+import { For, Show } from '@/components/utils'
 import { MyTags } from '../tags'
 import { isEmpty } from '@/lib/utils'
 import { useLiveQueryNote } from '@/hooks/use-live-query/note'
@@ -18,14 +18,13 @@ export function MyNotes() {
 			<h5>
 				<Tags className='size-4.5 stroke-[1.5px] inline mr-1.5' /> Your tags
 			</h5>
-			<MyTags />
 
+			<MyTags />
 			<Separator className='my-3' />
 
 			<div className='flex items-center justify-between mb-1 mx-1'>
 				<h4 className='flex items-center gap-2'>
-					<NotebookText className='size-5' />
-					Your notes
+					<NotebookText className='size-5' /> Your notes
 				</h4>
 				<NewNote size='sm' />
 			</div>

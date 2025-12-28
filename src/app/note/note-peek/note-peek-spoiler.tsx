@@ -9,6 +9,5 @@ export function NoteSpoiler({ content }: NoteSpoilerProps) {
 		const cleanedString = str.replaceAll(/<\/?[^>]+>/g, ' ').trim()
 		return cleanedString.slice(0, 100)
 	}
-
 	return <span className='line-clamp-2 my-2'>{removeHTMLTags(content)}</span>
 }

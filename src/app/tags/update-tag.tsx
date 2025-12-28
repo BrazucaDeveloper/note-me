@@ -25,7 +25,7 @@ export function UpdateTag({ tag, isEditable }: UpdateTagProps) {
 			disabled={!isEditable}
 			aria-label='edit tag name'
 			defaultValue={tag?.title ?? 'none'}
-			onBlur={e => updateTag(tag!.cid, e.target.value)}
+			onBlur={e => updateTag({ cid: tag!.cid, title: e.target.value })}
 			onKeyDown={e => e.key === 'Enter' && e.currentTarget.blur()}
 			style={{ width: inputWidth }}
 			className={`outline-none disabled:pointer-events-none focus:bg-none px-1 max-w-22 text-ellipsis overflow-hidden whitespace-nowrap`}

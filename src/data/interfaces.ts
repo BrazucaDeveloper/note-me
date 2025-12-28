@@ -3,7 +3,7 @@ interface Note {
 	gid: number | null // global ID
 	title: string
 	content: string | null
-	isPined: boolean
+	isPinned: boolean
 	owner: number | null // user global ID
 	createdAt: number
 	updatedAt: number

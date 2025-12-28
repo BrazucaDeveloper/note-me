@@ -10,6 +10,9 @@ import { useEffect, useReducer, useState, useTransition } from 'react'
 import { useDebounce } from '@/hooks/use-debounce'
 import type { Note } from '@/data/interfaces'
 
+const transitionDuration =
+	Number(import.meta.env.VITE_TRANSITION_DURATION) || 3_000
+
 export const getProviders = () => {
 	const [isSaving, startSaving] = useTransition()
 
@@ -51,9 +54,6 @@ export const getProviders = () => {
 
 	const [isEditorEnabled, setIsEditorEnabled] = useState<boolean>(true)
 	const handleToggleIsEditorEnabled = () => setIsEditorEnabled(prev => !prev)
-
-	const transitionDuration =
-		Number(import.meta.env.VITE_TRANSITION_DURATION) || 3000 // Use um fallback
 
 	useEffect(() => {
 		const id = setTimeout(

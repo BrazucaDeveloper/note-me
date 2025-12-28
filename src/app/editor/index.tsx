@@ -1,13 +1,13 @@
 import X from 'lucide-react/dist/esm/icons/x'
 import { lazy } from 'react'
-import { Button } from '../ui/button'
-import { Card, CardContent, CardHeader } from '../ui/card'
-import { Show } from '../utils'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Show } from '@/components/utils'
 import { Fallback } from './fallback'
 import { Tools } from './tools'
 import { Title } from './title'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { getNoteContext } from '@/global/note-context.tsx'
 
 const TipTap = lazy(() => import('./tip-tap/index.tsx'))

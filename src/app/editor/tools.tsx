@@ -8,9 +8,9 @@ import Eye from 'lucide-react/dist/esm/icons/eye'
 import PenBox from 'lucide-react/dist/esm/icons/pen-box'
 import Save from 'lucide-react/dist/esm/icons/save'
 import Cloud from 'lucide-react/dist/esm/icons/cloud'
-import { PinIcon } from '../icons/pin'
-import { Button } from '../ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
+import { PinIcon } from '@/components/icons/pin'
+import { Button } from '@/components/ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 export function Tools() {
 	const {
@@ -33,9 +33,9 @@ export function Tools() {
 					<Button
 						size='icon'
 						variant='outline'
-						onClick={() => toggleIsPinned()}
+						onClick={() => toggleIsPinned(selectedNote.cid)}
 					>
-						<PinIcon variant={selectedNote?.isPined ? 'filled' : 'outline'} />
+						<PinIcon variant={selectedNote?.isPinned ? 'filled' : 'outline'} />
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent className='font-semibold text-sm'>
