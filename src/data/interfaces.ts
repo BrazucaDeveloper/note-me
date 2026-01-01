@@ -1,29 +1,30 @@
 interface Note {
-	cid: number // client ID
-	gid: number | null // global ID
+	cid: number
+	gid?: number
 	title: string
 	content: string | null
 	isPinned: boolean
-	owner: number | null // user global ID
+	owner?: string
 	createdAt: number
 	updatedAt: number
 	status: 'active' | 'trashed'
 }
 
 interface Tag {
-	cid: number // client ID
-	gid: number | null // global ID
+	cid: number
+	gid?: number
 	title: string
-	owner: number | null // user global ID
+	owner?: string
 	createdAt: number
 	updatedAt: number
 	status: 'active' | 'trashed'
 }
 
 interface NoteTag {
-	note: number // note client ID
-	tag: number // tag client ID
-	owner: number | null // global user ID
+	note: number
+	tag: number
+  gid?: number
+	owner?: string
 	createdAt: number
 	updatedAt: number
 }

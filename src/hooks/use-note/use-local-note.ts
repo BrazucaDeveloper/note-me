@@ -1,7 +1,6 @@
 import { cleanObject } from '@/lib/utils'
 import { IndexDB } from '@/data/db.client'
 import type { Note } from '@/data/interfaces'
-// import { useDebounce } from '../use-debounce'
 
 export function useLocalNote() {
 	const create = async (note: Omit<Note, 'cid'>) => {

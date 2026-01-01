@@ -4,10 +4,11 @@ import { getNoteContext } from '@/global/note-context'
 import { BubbleMenu } from './bubble-menu'
 import { Fragment } from 'react/jsx-runtime'
 import { useNote } from '@/hooks/use-note'
+import { useEffect } from 'react'
 
 export default function Tiptap() {
 	const { updateNote } = useNote()
-	const { selectedNote, isEditorEnabled } = getNoteContext()
+	const { selectedNote } = getNoteContext()
 
 	const autosave = ({ editor }: EditorEvents['update']) => {
 		if (!selectedNote) return
@@ -17,15 +18,18 @@ export default function Tiptap() {
 		})
 	}
 
-	const editor = useEditor(
-		{
-			extensions: [StarterKit],
-			content: selectedNote?.content,
-			onUpdate: autosave,
-			editable: isEditorEnabled,
-		},
-		[isEditorEnabled]
-	)
+  const editor = useEditor(
+    {
+      extensions: [StarterKit],
+      content: selectedNote?.content,
+      onUpdate: autosave,
+      editable: true,
+    }
+  )
+  
+  useEffect(() => {
+    editor.commands.setContent(selectedNote?.content || '')
+  }, [selectedNote!.cid])
 
 	return (
 		<Fragment>

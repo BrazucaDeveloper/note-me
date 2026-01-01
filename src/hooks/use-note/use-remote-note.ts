@@ -5,18 +5,23 @@ import { useDebounce } from '../use-debounce'
 import { useLocalNote } from './use-local-note'
 
 export function useRemoteNote() {
-	const fetch = useFetch(import.meta.env.VITE_API_PROXY)
 	const { readLocalNote } = useLocalNote()
+	const fetch = useFetch(import.meta.env.VITE_API_PROXY)
 
 	const create = useDebounce(async (note: Omit<Note, 'gid'>) => {
 		const response = await fetch({
 			method: 'POST',
-			subUrl: '/notes',
+			subUrl: '/note',
 			body: JSON.stringify(note),
 		})
 
 		if (!response.ok) throw new Error('Failed to create remote note')
-		return 1
+		const { status, data, message } = await response.json<{ gid: number }>()
+    
+		console.error(message)
+		
+		if (status !== 201) throw new Error('Failed to create remote note')
+		return data.gid
 	}, 4_000)
 
 	const update = useDebounce(async (note: Partial<Note> & { gid: number }) => {
@@ -28,9 +33,13 @@ export function useRemoteNote() {
 			body: JSON.stringify(noteCleaned),
 		})
 
-		// if (!response.ok) throw new Error('Failed to update note')
-		console.log(await response.json())
-		return 1
+		if (!response.ok) throw new Error('Failed to update note')
+    const { status, data, message } = await response.json<{ gid: number }>()
+    
+    console.error(message)
+		
+		if (status !== 201) throw new Error('Failed to create remote note')
+		return data.gid
 	}, 4_000)
 
 	const upsert = async (note: Partial<Note>) => {
@@ -42,7 +51,7 @@ export function useRemoteNote() {
 		}
 	}
 
-	const remove = async () => {}
+	const remove = async () => { }
 
 	return {
 		createRemoteNote: create,

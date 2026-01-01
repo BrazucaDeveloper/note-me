@@ -10,21 +10,20 @@ export function useNote() {
 	const { createLocalNote, readLocalNote, updateLocalNote } = useLocalNote()
 	const { createRemoteNote, upsertRemoteNote } = useRemoteNote()
 
-	const defaultNewNote: Omit<Note, 'cid'> = {
-		gid: null,
+	const defaultNewNote: Omit<Note, 'cid' | 'gid'> = {
 		title: 'Give a title to your new note :)',
 		content: '🌱 Sprout your ideias here!',
 		isPinned: false,
 		status: 'active',
-		owner: Number(userId) || null,
+		owner: userId || undefined,
 		createdAt: Date.now(),
 		updatedAt: Date.now(),
 	}
 
 	const createNote = useThrottle(
 		async (): Promise<[isLocalSaved: boolean, isRemoteSaved: boolean]> => {
-			const cid = await createLocalNote(defaultNewNote)
-			const [noteCreated] = await readLocalNote(cid)
+		  const cid = await createLocalNote(defaultNewNote)
+		  const [noteCreated] = await readLocalNote(cid)
 
 			if (!noteCreated) throw new Error('Failed to create note')
 
