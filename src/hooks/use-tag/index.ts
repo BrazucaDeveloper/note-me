@@ -7,11 +7,11 @@ export function useTag() {
 	const {} = useRemoteTag()
 
 	const create = async (title: string) => {
-	  console.log(title)
+		console.log(title)
 	}
 
-	const update = async (tag: Partial<Tag> & { cid: number }) => {
-	  console.log(tag)
+	const update = async (tag: Partial<Tag> & { id: string }) => {
+		console.log(tag)
 	}
 
 	const remove = async () => {}

@@ -1,5 +1,5 @@
 import { useRef, useCallback } from 'react'
-import { IS_DEBOUNCED_CANCELLED, sleep } from '@/lib/utils'
+import { IS_SLEEP_CANCELLED, sleep } from '@/lib/utils'
 
 /**
  * Custom hook that debounces a function call.
@@ -32,7 +32,7 @@ export function useDebounce<T extends (...args: any[]) => any>(
 				// 4. Se o tempo passou sem novo cancelamento, executamos o callback
 				return await callback(...args)
 			} catch (error: any) {
-				if (error === IS_DEBOUNCED_CANCELLED) return null
+				if (error === IS_SLEEP_CANCELLED) return null
 				// Repropagamos o erro para que o componente saiba que foi cancelado
 				throw error
 			} finally {

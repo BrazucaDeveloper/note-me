@@ -1,6 +1,6 @@
 // import { useTag } from '@/hooks/use-tag'
-import { X } from 'lucide-react'
 import Hash from 'lucide-react/dist/esm/icons/hash'
+import X from 'lucide-react/dist/esm/icons/x'
 import type { Tag } from '@/data/interfaces'
 import { useRef, useState } from 'react'
 import { UpdateTag } from './update-tag'
@@ -10,7 +10,7 @@ import { Show } from '@/components/utils'
 interface TagProps {
 	tag?: Tag
 	selected: boolean
-	onChangeSelect?: (cid: string) => void
+	onChangeSelect?: (id: string) => void
 }
 
 export function Tag({ tag, selected, onChangeSelect }: TagProps) {
@@ -23,10 +23,10 @@ export function Tag({ tag, selected, onChangeSelect }: TagProps) {
 
 		if (tag && isDoubleClick && !isEditable) {
 			setIsEditable(true)
-			onChangeSelect?.(tag.cid.toString())
+			onChangeSelect?.(tag.id)
 			return
 		} // else, is single click
-		onChangeSelect?.(tag?.cid.toString() ?? '0')
+		onChangeSelect?.(tag?.id ?? '0')
 		setIsEditable(false)
 	}
 
@@ -37,7 +37,7 @@ export function Tag({ tag, selected, onChangeSelect }: TagProps) {
 			variant={selected ? 'secondary' : 'outline'}
 		>
 			<Hash className='-mr-2' />
-			<Show condition={tag?.cid !== undefined} fallback={<span>none</span>}>
+			<Show condition={tag?.id !== undefined} fallback={<span>none</span>}>
 				<UpdateTag tag={tag!} isEditable={isEditable} />
 				<button aria-label='remove tag' type='button'>
 					<X

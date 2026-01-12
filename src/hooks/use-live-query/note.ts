@@ -18,14 +18,15 @@ export function useLiveQueryNote() {
 	}
 
 	return useLiveQuery(async () => {
-		if (query === '' && selectedTags.has('0')) return sortDefault(
-			await IndexDB.note.where('status').equals('active').toArray()
-		)
+		if (query === '' && selectedTags.has('0'))
+			return sortDefault(
+				await IndexDB.note.where('status').equals('active').toArray()
+			)
 
 		let result: Note[] = []
 		if (query !== '') {
 			result = await IndexDB.note
-			  .where('status')
+				.where('status')
 				.equals('active')
 				.filter(note => note.title.toLowerCase().includes(query.toLowerCase()))
 				.toArray()

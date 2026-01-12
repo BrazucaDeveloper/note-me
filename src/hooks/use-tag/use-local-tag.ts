@@ -6,46 +6,44 @@ export function useLocalTag() {
 	const { userId } = useAuth()
 
 	const create = async (title: string) => {
-		return await IndexDB.tag.put({
-			gid: null,
+		return await IndexDB.tag.add({
 			title,
 			status: 'active',
-			owner: Number(userId) || null,
+			owner: userId || undefined,
 			createdAt: Date.now(),
 			updatedAt: Date.now(),
 		})
 	}
 
-	const update = async (cid: number, title: string) => {
-		return await IndexDB.tag.update(cid, {
+	const update = async (id: string, title: string) => {
+		return await IndexDB.tag.update(id, {
 			title,
 			updatedAt: Date.now(),
 		})
 	}
 
-	const remove = async (cid: number) => {
-		console.log('Deleting tag with ID:', cid)
+	const remove = async (id: string) => {
 		return await IndexDB.transaction('rw', ['tag', 'noteTag'], async () => {
 			await IndexDB.noteTag
 				.where('[note+tag]')
-				.between([Dexie.minKey, cid], [Dexie.maxKey, cid])
+				.between([Dexie.minKey, id], [Dexie.maxKey, id])
 				.delete()
-			await IndexDB.tag.delete(cid)
+			await IndexDB.tag.delete(id)
 		})
 	}
 
-	const toggleTagNote = async (note: number, tag: number) => {
-		const noteTag = IndexDB.noteTag.where('[note+tag]').equals(`${note}-${tag}`)
+	const toggleTagNote = async (noteId: string, tagId: string) => {
+		const noteTag = IndexDB.noteTag.where('[note+tag]').equals(`${noteId}-${tagId}`)
 
 		if ((await noteTag.count()) > 0) return await noteTag.delete()
 		const now = Date.now()
 
 		return await IndexDB.noteTag.add({
-			note,
-			tag,
+			note: noteId,
+			tag: tagId,
 			createdAt: now,
 			updatedAt: now,
-			owner: Number(userId) || null,
+			owner: userId || undefined,
 		})
 	}
 

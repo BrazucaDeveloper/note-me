@@ -4,9 +4,7 @@ import {
 	resetSaved,
 	setRemoteSaved,
 } from './save-reducer'
-
 import { useEffect, useReducer, useState, useTransition } from 'react'
-
 import { useDebounce } from '@/hooks/use-debounce'
 import type { Note } from '@/data/interfaces'
 
@@ -31,13 +29,13 @@ export const getProviders = () => {
 
 	const [selectedTags, setTagsSelected] = useState<Set<string>>(new Set('0'))
 
-	const handleTagsSelected = (cid: string) => {
+	const handleTagsSelected = (id: string) => {
 		setTagsSelected(prev => {
-			if (cid === '0') return new Set('0')
+			if (id === '0') return new Set('0')
 
 			prev.delete('0')
 			const newSet = new Set(prev)
-			newSet.has(cid) ? newSet.delete(cid) : newSet.add(cid)
+			newSet.has(id) ? newSet.delete(id) : newSet.add(id)
 			return newSet
 		})
 	}

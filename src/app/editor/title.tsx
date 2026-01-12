@@ -11,7 +11,7 @@ export function Title() {
 		if (!selectedNote) return
 
 		await updateNote({
-			cid: selectedNote.cid,
+			id: selectedNote.id,
 			title: e.target.value,
 		})
 	}

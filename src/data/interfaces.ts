@@ -1,32 +1,31 @@
-interface Note {
-	cid: number
-	gid?: number
+interface SharedColumns {
+	id: string
+	owner?: string
+	createdAt: number
+	updatedAt: number
+	status: 'active' | 'trashed'
+}
+
+interface Note extends SharedColumns {
 	title: string
-	content: string | null
+	content: string
 	isPinned: boolean
-	owner?: string
-	createdAt: number
-	updatedAt: number
-	status: 'active' | 'trashed'
 }
 
-interface Tag {
-	cid: number
-	gid?: number
+type UpdateNote = Partial<Note> & Pick<Note, 'id'>
+
+interface Tag extends SharedColumns {
 	title: string
-	owner?: string
-	createdAt: number
-	updatedAt: number
-	status: 'active' | 'trashed'
 }
 
-interface NoteTag {
-	note: number
-	tag: number
-  gid?: number
-	owner?: string
-	createdAt: number
-	updatedAt: number
+interface NoteTag extends Omit<SharedColumns, 'id' | 'status'> {
+	note: string
+	tag: string
 }
 
-export type { Note, Tag, NoteTag }
+interface Settings {
+	key: string
+	value: string | number | boolean
+}
+
+export type { Note, UpdateNote, Tag, NoteTag, Settings }

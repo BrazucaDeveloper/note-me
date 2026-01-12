@@ -18,9 +18,9 @@ export function MyTags() {
 				{tag => (
 					<Tag
 						tag={tag}
-						key={tag.cid}
+						key={tag.id}
 						onChangeSelect={handleTagsSelected}
-						selected={selectedTags.has(tag.cid.toString())}
+						selected={selectedTags.has(tag.id)}
 					/>
 				)}
 			</For>

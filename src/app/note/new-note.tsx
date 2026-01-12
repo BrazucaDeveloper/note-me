@@ -3,7 +3,11 @@ import Plus from 'lucide-react/dist/esm/icons/plus'
 import type { ComponentProps } from 'react'
 import { useNote } from '@/hooks/use-note'
 import { Button, type buttonVariants } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { Show } from '@/components/utils'
 
 interface NewNoteProps

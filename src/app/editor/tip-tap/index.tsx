@@ -13,23 +13,21 @@ export default function Tiptap() {
 	const autosave = ({ editor }: EditorEvents['update']) => {
 		if (!selectedNote) return
 		updateNote({
-			cid: selectedNote.cid,
+			id: selectedNote.id,
 			content: editor.getHTML(),
 		})
 	}
 
-  const editor = useEditor(
-    {
-      extensions: [StarterKit],
-      content: selectedNote?.content,
-      onUpdate: autosave,
-      editable: true,
-    }
-  )
-  
-  useEffect(() => {
-    editor.commands.setContent(selectedNote?.content || '')
-  }, [selectedNote!.cid])
+	const editor = useEditor({
+		extensions: [StarterKit],
+		content: selectedNote?.content,
+		onUpdate: autosave,
+		editable: true,
+	})
+
+	useEffect(() => {
+		editor.commands.setContent(selectedNote?.content || '')
+	}, [selectedNote!.id])
 
 	return (
 		<Fragment>

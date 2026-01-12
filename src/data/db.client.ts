@@ -1,16 +1,18 @@
 import Dexie, { type EntityTable } from 'dexie'
-import type { Note, Tag, NoteTag } from './interfaces'
+import type { Note, Tag, NoteTag, Settings } from './interfaces'
 
 const IndexDB = new Dexie('db.note.me') as Dexie & {
-	note: EntityTable<Note, 'cid'>
-	tag: EntityTable<Tag, 'cid'>
+	note: EntityTable<Note, 'id'>
+	tag: EntityTable<Tag, 'id'>
 	noteTag: EntityTable<NoteTag>
+	settings: EntityTable<Settings, 'key'>
 }
 
 IndexDB.version(1).stores({
-	note: '++cid, gid, title, content, isPinned, owner, status, createdAt, updatedAt',
-	tag: '++cid, gid, title, owner, status, createdAt, updatedAt',
-	noteTag: '[note+tag], gid, owner, createdAt, updatedAt',
+	note: 'id, title, status, createdAt, updatedAt',
+	tag: 'id, title, status, createdAt, updatedAt',
+	noteTag: '[note+tag], createdAt, updatedAt',
+	settings: 'key',
 })
 
 export { IndexDB, type Note, type Tag, type NoteTag }

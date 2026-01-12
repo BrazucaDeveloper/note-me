@@ -1,17 +1,18 @@
 import { useAuth } from '@clerk/clerk-react'
 
 interface JsonResponse<T> {
-  status: number
-  message: string
-  data: T
+	status: number
+	message: string
+	data: T
 }
 
-type UseFetchResponse = Promise<{
-  json: <T>() => Promise<JsonResponse<T>>
-} & Response>
+type UseFetchResponse = Promise<
+	{
+		json: <T>() => Promise<JsonResponse<T>>
+	} & Response
+>
 
 type UseFetchProps = RequestInit & { subUrl?: string }
-
 
 /**
  * Custom hook for making authorized HTTP requests.
@@ -23,15 +24,15 @@ export function useFetch(baseUrl: string) {
 
 	return async (options?: UseFetchProps): UseFetchResponse => {
 		const token = await getToken()
-		
-    const headers: HeadersInit = {
-      Authorization: `Bearer ${token}`,
-      ...options?.headers,
-    }
-    
+
+		const headers: HeadersInit = {
+			Authorization: `Bearer ${token}`,
+			...options?.headers,
+		}
+
 		const { subUrl } = options || {}
 		const url = `${baseUrl}${subUrl || ''}`
-		
+
 		return fetch(url, { ...options, headers })
 	}
 }

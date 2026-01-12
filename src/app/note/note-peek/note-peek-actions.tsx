@@ -1,4 +1,3 @@
-// NotePeekActions.tsx
 import {
 	ContextMenuCheckboxItem,
 	ContextMenuContent,
@@ -32,7 +31,7 @@ export function NotePeekActions({
 }: NoteActionsProps) {
 	return (
 		<ContextMenuContent>
-			<ContextMenuItem onClick={() => onTogglePin(note.cid)}>
+			<ContextMenuItem onClick={() => onTogglePin(note.id)}>
 				<Show
 					condition={note.isPinned}
 					fallback={
@@ -60,9 +59,9 @@ export function NotePeekActions({
 							<For each={tags}>
 								{tag => (
 									<ContextMenuCheckboxItem
-										key={tag?.cid}
-										checked={!!tagsByNote?.find(t => t?.cid === tag.cid)}
-										onClick={() => console.log('Tag toggle:', tag.cid)}
+										key={tag?.id}
+										checked={!!tagsByNote?.find(t => t?.id === tag.id)}
+										onClick={() => console.log('Tag toggle:', tag.id)}
 									>
 										#{tag?.title}
 									</ContextMenuCheckboxItem>
@@ -75,7 +74,7 @@ export function NotePeekActions({
 
 			<ContextMenuItem
 				variant='destructive'
-				onClick={() => onToggleTrash(note.cid)}
+				onClick={() => onToggleTrash(note.id)}
 			>
 				<Trash /> Trash
 			</ContextMenuItem>

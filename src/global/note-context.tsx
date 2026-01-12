@@ -9,7 +9,7 @@ interface NoteContextProps {
 	query: string
 	handleQueryChange: (query: string) => void
 	selectedTags: Set<string>
-	handleTagsSelected: (cid: string) => void
+	handleTagsSelected: (id: string) => void
 	isEditorEnabled: boolean
 	handleToggleIsEditorEnabled: () => void
 	isSaving: boolean

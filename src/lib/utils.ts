@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }
 
-export const IS_DEBOUNCED_CANCELLED = 'AbortError'
+export const IS_SLEEP_CANCELLED = 'AbortError'
 
 export function sleep(milliseconds: number, signal?: AbortSignal) {
 	return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ export function sleep(milliseconds: number, signal?: AbortSignal) {
 				reject(
 					new DOMException(
 						`Sleep of ${milliseconds} was aborted`,
-						IS_DEBOUNCED_CANCELLED
+						IS_SLEEP_CANCELLED
 					)
 				)
 			},

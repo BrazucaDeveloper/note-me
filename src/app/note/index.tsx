@@ -42,7 +42,7 @@ export function MyNotes() {
 					<SidebarMenu className='space-y-2 pr-3'>
 						<For each={notes}>
 							{note => (
-								<SidebarMenuItem key={note.cid}>
+								<SidebarMenuItem key={note.id}>
 									<NotePeek note={note} />
 								</SidebarMenuItem>
 							)}

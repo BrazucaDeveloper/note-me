@@ -9,7 +9,11 @@ import { Logo } from '../components/logo'
 import { MyNotes } from './note'
 import { NoteSearch } from './note/note-search'
 import { Button } from '../components/ui/button'
-import { Sidebar, SidebarContent, SidebarHeader } from '../components/ui/sidebar'
+import {
+	Sidebar,
+	SidebarContent,
+	SidebarHeader,
+} from '../components/ui/sidebar'
 
 export function Aside() {
 	return (

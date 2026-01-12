@@ -1,62 +1,59 @@
-import type { Note } from '@/data/interfaces'
+import type { Note, UpdateNote } from '@/data/interfaces'
 import { useFetch } from '../use-fetch'
 import { cleanObject } from '@/lib/utils'
 import { useDebounce } from '../use-debounce'
-import { useLocalNote } from './use-local-note'
 
 export function useRemoteNote() {
-	const { readLocalNote } = useLocalNote()
-	const fetch = useFetch(import.meta.env.VITE_API_PROXY)
+	const fetch = useFetch(`${import.meta.env.VITE_API_PROXY}/note`)
 
-	const create = useDebounce(async (note: Omit<Note, 'gid'>) => {
+	const push = async (notesToPush: Note[], lastSync: number) => {
+		const response = await fetch({
+			method: 'PUT',
+			subUrl: `/sync/${lastSync}`,
+			body: JSON.stringify({ notes: notesToPush }),
+		})
+
+		const { data, status, message } = await response.json<{ notes: Note[] }>()
+
+		if (status !== 200) throw new Error(message)
+		return data.notes
+	}
+
+	const create = useDebounce(async (note: Note) => {
 		const response = await fetch({
 			method: 'POST',
-			subUrl: '/note',
 			body: JSON.stringify(note),
 		})
 
 		if (!response.ok) throw new Error('Failed to create remote note')
-		const { status, data, message } = await response.json<{ gid: number }>()
-    
-		console.error(message)
-		
+		const { status, data } = await response.json<{ id: string }>()
+
 		if (status !== 201) throw new Error('Failed to create remote note')
-		return data.gid
+		return data.id
 	}, 4_000)
 
-	const update = useDebounce(async (note: Partial<Note> & { gid: number }) => {
+	const update = useDebounce(async (note: UpdateNote) => {
 		const noteCleaned = cleanObject(note)
 
 		const response = await fetch({
 			method: 'PATCH',
-			subUrl: `/notes/${noteCleaned.gid}`,
+			subUrl: `/${noteCleaned.id}`,
 			body: JSON.stringify(noteCleaned),
 		})
 
 		if (!response.ok) throw new Error('Failed to update note')
-    const { status, data, message } = await response.json<{ gid: number }>()
-    
-    console.error(message)
-		
-		if (status !== 201) throw new Error('Failed to create remote note')
-		return data.gid
-	}, 4_000)
+		const { status, data, message } = await response.json<{ id: string }>()
 
-	const upsert = async (note: Partial<Note>) => {
-		if (note.gid) {
-			return await update({ ...note, gid: note.gid })
-		} else {
-			const [localNote] = await readLocalNote(note.cid)
-			return await create(localNote)
-		}
-	}
+		if (status !== 200) throw new Error(message)
+		return data.id
+  }, 4_000)
 
-	const remove = async () => { }
+	const remove = async () => {}
 
 	return {
+		pushNotesToRemote: push,
 		createRemoteNote: create,
 		updateRemoteNote: update,
-		upsertRemoteNote: upsert,
 		deleteRemoteNote: remove,
 	}
 }

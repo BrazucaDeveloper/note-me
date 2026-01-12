@@ -10,7 +10,11 @@ import Save from 'lucide-react/dist/esm/icons/save'
 import Cloud from 'lucide-react/dist/esm/icons/cloud'
 import { PinIcon } from '@/components/icons/pin'
 import { Button } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 export function Tools() {
 	const {
@@ -33,7 +37,7 @@ export function Tools() {
 					<Button
 						size='icon'
 						variant='outline'
-						onClick={() => toggleIsPinned(selectedNote.cid)}
+						onClick={() => toggleIsPinned(selectedNote.id)}
 					>
 						<PinIcon variant={selectedNote?.isPinned ? 'filled' : 'outline'} />
 					</Button>

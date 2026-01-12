@@ -1,8 +1,7 @@
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { NoteProvider } from '@/global/note-context'
 import { ClerkProvider } from '@clerk/clerk-react'
-import { Editor } from './editor'
-import { Aside } from './aside'
+import NoteMe from './note-me'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -14,10 +13,7 @@ export default function App() {
 		>
 			<SidebarProvider>
 				<NoteProvider>
-					<div className='flex h-dvh max-h-screen w-dvw subpixel-antialiased'>
-						<Aside />
-						<Editor />
-					</div>
+					<NoteMe />
 				</NoteProvider>
 			</SidebarProvider>
 		</ClerkProvider>

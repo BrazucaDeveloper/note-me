@@ -37,7 +37,7 @@ export const NoteFooter = ({
 			<For each={tagsByNote}>
 				{tag => (
 					<Show condition={!isEmpty(tag)} fallback={<></>}>
-						<Badge variant='secondary' key={tag?.cid}>
+						<Badge variant='secondary' key={tag?.id}>
 							<Hash className='-mr-1.5' />
 							{tag?.title}
 						</Badge>

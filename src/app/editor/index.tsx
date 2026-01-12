@@ -7,7 +7,11 @@ import { Fallback } from './fallback'
 import { Tools } from './tools'
 import { Title } from './title'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip.tsx'
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from '@/components/ui/tooltip.tsx'
 import { getNoteContext } from '@/global/note-context.tsx'
 
 const TipTap = lazy(() => import('./tip-tap/index.tsx'))
@@ -17,7 +21,7 @@ export function Editor() {
 
 	return (
 		<Card className='flex-grow size-full pl-4 pt-8 rounded-none overflow-hidden'>
-			<Show condition={!!selectedNote?.cid} fallback={<Fallback />}>
+			<Show condition={!!selectedNote?.id} fallback={<Fallback />}>
 				<ScrollArea className='h-full w-full content-center'>
 					<CardHeader className='flex items-center sticky top-0 bg-card pb-4'>
 						<Tooltip>

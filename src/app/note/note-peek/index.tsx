@@ -23,7 +23,7 @@ export function NotePeek({ note }: { note: Note }) {
 			<ContextMenuTrigger>
 				<SidebarMenuButton
 					onClick={() => handleNoteSelect(note)}
-					aria-selected={selectedNote?.cid === note.cid}
+					aria-selected={selectedNote?.id === note.id}
 					className='aria-[selected=true]:bg-card flex flex-col items-start h-fit p-4 border border-border transition-all duration-300'
 				>
 					<NoteHeader title={note.title} isPinned={note.isPinned} />
