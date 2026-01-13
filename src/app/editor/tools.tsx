@@ -1,4 +1,4 @@
-import { getNoteContext } from '@/global/note-context.tsx'
+import { useEditor } from '@/global/context/editor-context'
 import { useNote } from '@/hooks/use-note'
 import { useDownloadNote } from '@/hooks/use-download-note'
 import { useAuth } from '@clerk/clerk-react'
@@ -15,14 +15,13 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useSave } from '@/global/context/save-context'
 
 export function Tools() {
-	const {
-		isSaved,
-		selectedNote,
-		isEditorEnabled,
-		handleToggleIsEditorEnabled,
-	} = getNoteContext()
+	const { selectedNote, isEditorEnabled, handleToggleIsEditorEnabled } =
+		useEditor()
+
+	const { isSaved } = useSave()
 
 	if (!selectedNote) return <></>
 

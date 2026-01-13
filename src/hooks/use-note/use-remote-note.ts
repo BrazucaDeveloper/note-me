@@ -1,7 +1,7 @@
 import type { Note, UpdateNote } from '@/data/interfaces'
-import { useFetch } from '../use-fetch'
+import { useFetch } from '../utils/use-fetch'
 import { cleanObject } from '@/lib/utils'
-import { useDebounce } from '../use-debounce'
+import { useDebounce } from '../utils/use-debounce'
 
 export function useRemoteNote() {
 	const fetch = useFetch(`${import.meta.env.VITE_API_PROXY}/note`)
@@ -46,7 +46,7 @@ export function useRemoteNote() {
 
 		if (status !== 200) throw new Error(message)
 		return data.id
-  }, 4_000)
+	}, 4_000)
 
 	const remove = async () => {}
 

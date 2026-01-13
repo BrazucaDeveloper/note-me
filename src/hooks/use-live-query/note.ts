@@ -1,9 +1,11 @@
-import { getNoteContext } from '@/global/note-context.tsx'
+import { useEditor } from '@/global/context/editor-context'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { IndexDB, type Note } from '@/data/db.client'
+import { useSearch } from '@/global/context/search-context'
 
 export function useLiveQueryNote() {
-	const { query, selectedTags } = getNoteContext()
+	const { query } = useSearch()
+	const { selectedTags } = useEditor()
 
 	const sortDefault = (notes: Note[]) => {
 		return notes.sort((a, b) => {

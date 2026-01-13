@@ -1,9 +1,9 @@
 import { Input } from '@/components/ui/input'
 import Search from 'lucide-react/dist/esm/icons/search'
-import { getNoteContext } from '@/global/note-context.tsx'
+import { useSearch } from '@/global/context/search-context'
 
 export function NoteSearch() {
-	const { handleQueryChange } = getNoteContext()
+	const { handleQueryChange } = useSearch()
 
 	return (
 		<div className='relative'>

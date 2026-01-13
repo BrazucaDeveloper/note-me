@@ -1,10 +1,10 @@
-import { useDebounce } from '@/hooks/use-debounce'
+import { useDebounce } from '@/hooks/utils/use-debounce'
 import { useNote } from '@/hooks/use-note'
 import { type ChangeEvent } from 'react'
-import { getNoteContext } from '@/global/note-context.tsx'
+import { useEditor } from '@/global/context/editor-context'
 
 export function Title() {
-	const { selectedNote } = getNoteContext()
+	const { selectedNote } = useEditor()
 	const { updateNote } = useNote()
 
 	const handleTitleChange = async (e: ChangeEvent<HTMLInputElement>) => {

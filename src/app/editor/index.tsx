@@ -12,12 +12,12 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '@/components/ui/tooltip.tsx'
-import { getNoteContext } from '@/global/note-context.tsx'
+import { useEditor } from '@/global/context/editor-context.tsx'
 
-const TipTap = lazy(() => import('./tip-tap/index.tsx'))
+const TipTap = lazy(() => import('./tip-tap.tsx'))
 
 export function Editor() {
-	const { selectedNote, handleNoteSelect } = getNoteContext()
+	const { selectedNote, handleNoteSelect } = useEditor()
 
 	return (
 		<Card className='flex-grow size-full pl-4 pt-8 rounded-none overflow-hidden'>

@@ -33,7 +33,9 @@ export function useLocalTag() {
 	}
 
 	const toggleTagNote = async (noteId: string, tagId: string) => {
-		const noteTag = IndexDB.noteTag.where('[note+tag]').equals(`${noteId}-${tagId}`)
+		const noteTag = IndexDB.noteTag
+			.where('[note+tag]')
+			.equals(`${noteId}-${tagId}`)
 
 		if ((await noteTag.count()) > 0) return await noteTag.delete()
 		const now = Date.now()
