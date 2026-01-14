@@ -7,14 +7,17 @@ export function Title() {
 	const { selectedNote } = useEditor()
 	const { updateNote } = useNote()
 
-	const handleTitleChange = useDebounce(async (e: ChangeEvent<HTMLInputElement>) => {
-		if (!selectedNote) return
+	const handleTitleChange = useDebounce(
+		async (e: ChangeEvent<HTMLInputElement>) => {
+			if (!selectedNote) return
 
-		await updateNote({
-			id: selectedNote.id,
-			title: e.target.value,
-		})
-	}, import.meta.env.VITE_AUTOSAVE_DELAY)
+			await updateNote({
+				id: selectedNote.id,
+				title: e.target.value,
+			})
+		},
+		import.meta.env.VITE_AUTOSAVE_DELAY
+	)
 
 	return (
 		<input

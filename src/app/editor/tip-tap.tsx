@@ -13,29 +13,30 @@ export default function Tiptap() {
 	const { selectedNote, isEditorEnabled } = useEditorContext()
 	const { startSaving, handleIsSaved } = useSave()
 
-	const autosave = useDebounce(({ editor }: EditorEvents['update']) => {
-    if (!selectedNote) return
-		
-		startSaving(async () => {
-			const [isRemoteSynced, isLocalSynced] = await updateNote({
-				id: selectedNote.id,
-				content: editor.getHTML(),
-      })
-			
-			console.log(`>- isRemoteSynced: ${isRemoteSynced}, isLocalSynced: ${isLocalSynced}`)
-			
-      if (isRemoteSynced && isLocalSynced)
-        return handleIsSaved(true, 'both')
-      
-      if (!isRemoteSynced && !isLocalSynced)
-        return handleIsSaved(false, 'both')
-			
-			handleIsSaved(true, isRemoteSynced ? 'remote' : 'local')
-		})
-	}, import.meta.env.VITE_AUTOSAVE_DELAY)
+	const autosave = useDebounce(
+		({ editor }: EditorEvents['update']) => {
+			if (!selectedNote) return
+
+			startSaving(async () => {
+				const [isRemoteSynced, isLocalSynced] = await updateNote({
+					id: selectedNote.id,
+					content: editor.getHTML(),
+				})
+
+				if (isRemoteSynced && isLocalSynced) return handleIsSaved(true, 'both')
+
+				if (!isRemoteSynced && !isLocalSynced)
+					return handleIsSaved(false, 'both')
+
+				handleIsSaved(true, isRemoteSynced ? 'remote' : 'local')
+			})
+		},
+		import.meta.env.VITE_AUTOSAVE_DELAY
+	)
 
 	const editor = useEditor({
 		extensions: [StarterKit],
+		autofocus: false,
 		content: selectedNote?.content,
 		onUpdate: autosave,
 		editable: isEditorEnabled,

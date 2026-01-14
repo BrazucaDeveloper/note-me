@@ -38,7 +38,12 @@ export function NewNote({
 		>
 			<Tooltip>
 				<TooltipTrigger asChild>
-					<Button size='icon' variant={variant} onClick={createNoteThrottle} {...props}>
+					<Button
+						size='icon'
+						variant={variant}
+						onClick={createNoteThrottle}
+						{...props}
+					>
 						<Plus />
 					</Button>
 				</TooltipTrigger>

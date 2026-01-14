@@ -8,11 +8,7 @@ import {
 	useMemo,
 	useCallback,
 } from 'react'
-import {
-	saveReducer,
-	type SaveReducerState,
-	saveActions,
-} from './save-reducer'
+import { saveReducer, type SaveReducerState, saveActions } from './save-reducer'
 
 const transitionDuration =
 	Number(import.meta.env.VITE_TRANSITION_DURATION) || 3_000
@@ -30,7 +26,7 @@ export const SaveProvider = ({ children }: { children: ReactElement }) => {
 	const [isSaving, startSaving] = useTransition()
 	const [isSaved, dispatchIsSaved] = useReducer(saveReducer, {
 		localSaved: null,
-    remoteSaved: null,
+		remoteSaved: null,
 	})
 
 	const handleIsSaved = useCallback(
