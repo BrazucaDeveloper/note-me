@@ -1,4 +1,3 @@
-// import { useTag } from '@/hooks/use-tag'
 import Hash from 'lucide-react/dist/esm/icons/hash'
 import X from 'lucide-react/dist/esm/icons/x'
 import type { Tag } from '@/data/interfaces'

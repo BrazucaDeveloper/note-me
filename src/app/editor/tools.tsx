@@ -21,10 +21,9 @@ export function Tools() {
 	const { selectedNote, isEditorEnabled, handleToggleIsEditorEnabled } =
 		useEditor()
 
-	const { isSaved } = useSave()
-
 	if (!selectedNote) return <></>
 
+	const { isSaved } = useSave()
 	const { isSignedIn } = useAuth()
 	const { toggleIsPinned } = useNote()
 	const { downloadNote, hasDownloaded } = useDownloadNote(selectedNote)

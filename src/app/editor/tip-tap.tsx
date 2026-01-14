@@ -5,29 +5,49 @@ import { BubbleMenu } from './bubble-menu'
 import { Fragment } from 'react/jsx-runtime'
 import { useNote } from '@/hooks/use-note'
 import { useEffect } from 'react'
+import { useSave } from '@/global/context/save-context'
+import { useDebounce } from '@/hooks/utils/use-debounce'
 
 export default function Tiptap() {
 	const { updateNote } = useNote()
-	const { selectedNote } = useEditorContext()
+	const { selectedNote, isEditorEnabled } = useEditorContext()
+	const { startSaving, handleIsSaved } = useSave()
 
-	const autosave = ({ editor }: EditorEvents['update']) => {
-		if (!selectedNote) return
-		updateNote({
-			id: selectedNote.id,
-			content: editor.getHTML(),
+	const autosave = useDebounce(({ editor }: EditorEvents['update']) => {
+    if (!selectedNote) return
+		
+		startSaving(async () => {
+			const [isRemoteSynced, isLocalSynced] = await updateNote({
+				id: selectedNote.id,
+				content: editor.getHTML(),
+      })
+			
+			console.log(`>- isRemoteSynced: ${isRemoteSynced}, isLocalSynced: ${isLocalSynced}`)
+			
+      if (isRemoteSynced && isLocalSynced)
+        return handleIsSaved(true, 'both')
+      
+      if (!isRemoteSynced && !isLocalSynced)
+        return handleIsSaved(false, 'both')
+			
+			handleIsSaved(true, isRemoteSynced ? 'remote' : 'local')
 		})
-	}
+	}, import.meta.env.VITE_AUTOSAVE_DELAY)
 
 	const editor = useEditor({
 		extensions: [StarterKit],
 		content: selectedNote?.content,
 		onUpdate: autosave,
-		editable: true,
+		editable: isEditorEnabled,
 	})
 
 	useEffect(() => {
 		editor.commands.setContent(selectedNote?.content || '')
 	}, [selectedNote!.id])
+
+	useEffect(() => {
+		editor.setEditable(isEditorEnabled)
+	}, [isEditorEnabled])
 
 	return (
 		<Fragment>

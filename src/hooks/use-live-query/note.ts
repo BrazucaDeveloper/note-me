@@ -9,7 +9,7 @@ export function useLiveQueryNote() {
 
 	const sortDefault = (notes: Note[]) => {
 		return notes.sort((a, b) => {
-			if ((a.isPinned === true) === (b.isPinned === true))
+			if (a.isPinned === true && b.isPinned === true)
 				return b.createdAt - a.createdAt
 
 			if (a.isPinned) return b.createdAt - a.createdAt

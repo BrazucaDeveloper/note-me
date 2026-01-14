@@ -56,9 +56,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
 		]
 	)
 
-	return (
-		<EditorContext.Provider value={value}>{children}</EditorContext.Provider>
-	)
+	return <EditorContext value={value}>{children}</EditorContext>
 }
 
 export const useEditor = () => {

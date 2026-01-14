@@ -13,6 +13,7 @@ import {
 	TooltipTrigger,
 } from '@/components/ui/tooltip.tsx'
 import { useEditor } from '@/global/context/editor-context.tsx'
+import { isEmpty } from '@/lib/utils.ts'
 
 const TipTap = lazy(() => import('./tip-tap.tsx'))
 
@@ -21,7 +22,7 @@ export function Editor() {
 
 	return (
 		<Card className='flex-grow size-full pl-4 pt-8 rounded-none overflow-hidden'>
-			<Show condition={!!selectedNote?.id} fallback={<Fallback />}>
+			<Show condition={!isEmpty(selectedNote?.id)} fallback={<Fallback />}>
 				<ScrollArea className='h-full w-full content-center'>
 					<CardHeader className='flex items-center sticky top-0 bg-card pb-4'>
 						<Tooltip>
@@ -45,7 +46,6 @@ export function Editor() {
 
 					<CardContent className='pl-9 pr-20 pt-2'>
 						<TipTap />
-						<ScrollBar />
 					</CardContent>
 
 					<ScrollBar />

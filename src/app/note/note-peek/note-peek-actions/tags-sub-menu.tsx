@@ -21,7 +21,7 @@ export const TagsSubMenu = ({ tags, tagsByNote }: TagsSubMenuProps) => {
 	return (
 		<ContextMenuItem>
 			<ContextMenuSub>
-				<ContextMenuSubTrigger>
+				<ContextMenuSubTrigger className='p-0 space-x-2'>
 					<Tags /> Tags
 				</ContextMenuSubTrigger>
 				<ContextMenuSubContent>

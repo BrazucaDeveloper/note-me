@@ -2,8 +2,6 @@ import type { UpdateNote } from '@/data/interfaces'
 import { useAuth } from '@clerk/clerk-react'
 import { useLocalNote } from './use-local-note'
 import { useRemoteNote } from './use-remote-note'
-import { useThrottle } from '../utils/use-throttling'
-import { useDebounce } from '../utils/use-debounce'
 import { SyncService } from '@/data/helper'
 
 type UseNoteResponse = Promise<
@@ -33,26 +31,26 @@ export function useNote() {
 		return [notesToPull.length > 0, notesPulled.length > 0]
 	}
 
-	const createNote = useThrottle(async (): UseNoteResponse => {
+	const createNote = async (): UseNoteResponse => {
 		const id = await createLocalNote()
 		const [noteCreated] = await readLocalNote(id)
 
 		if (!noteCreated) throw new Error('Failed to create note')
-		if (!isSignedIn) return [!!id, false]
+		if (!isSignedIn) return [false, !!id]
 
 		const gid = await createRemoteNote(noteCreated)
-		return [!!id, gid !== null]
-	}, 1_000) // can only be called once every 1000ms
+		return [gid !== null, !!id]
+	}
 
-	const updateNote = useDebounce(async (note: UpdateNote): UseNoteResponse => {
+	const updateNote = async (note: UpdateNote): UseNoteResponse => {
 		const noteToUpdate = { ...note, updatedAt: Date.now() }
 
 		const isLocalSaved = await updateLocalNote(noteToUpdate)
-		if (!isSignedIn) return [isLocalSaved, false]
+		if (!isSignedIn) return [false, isLocalSaved]
 
 		const isRemoteSaved = await updateRemoteNote(noteToUpdate)
-		return [isLocalSaved, isRemoteSaved]
-	}, 1_000) // can only be called once every 1000ms
+		return [isRemoteSaved, isLocalSaved]
+	}
 
 	const toggleIsPinned = async (id: string): UseNoteResponse => {
 		const [localNote] = await readLocalNote(id)

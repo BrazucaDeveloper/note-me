@@ -9,6 +9,7 @@ import {
 	TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { Show } from '@/components/utils'
+import { useThrottle } from '@/hooks/utils/use-throttling'
 
 interface NewNoteProps
 	extends ComponentProps<'button'>,
@@ -16,25 +17,28 @@ interface NewNoteProps
 	withTitle?: boolean
 }
 
+const THROTTLE_TIME = 1_000
+
 export function NewNote({
 	withTitle = false,
 	variant = 'secondary',
 	...props
 }: NewNoteProps) {
 	const { createNote } = useNote()
+	const createNoteThrottle = useThrottle(createNote, THROTTLE_TIME)
 
 	return (
 		<Show
 			condition={!withTitle}
 			fallback={
-				<Button variant={variant} onClick={createNote} {...props}>
+				<Button variant={variant} onClick={createNoteThrottle} {...props}>
 					<Plus /> Create a new note
 				</Button>
 			}
 		>
 			<Tooltip>
 				<TooltipTrigger asChild>
-					<Button size='icon' variant={variant} onClick={createNote} {...props}>
+					<Button size='icon' variant={variant} onClick={createNoteThrottle} {...props}>
 						<Plus />
 					</Button>
 				</TooltipTrigger>

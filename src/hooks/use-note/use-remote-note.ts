@@ -1,7 +1,6 @@
 import type { Note, UpdateNote } from '@/data/interfaces'
 import { useFetch } from '../utils/use-fetch'
 import { cleanObject } from '@/lib/utils'
-import { useDebounce } from '../utils/use-debounce'
 
 export function useRemoteNote() {
 	const fetch = useFetch(`${import.meta.env.VITE_API_PROXY}/note`)
@@ -19,7 +18,7 @@ export function useRemoteNote() {
 		return data.notes
 	}
 
-	const create = useDebounce(async (note: Note) => {
+	const create = async (note: Note) => {
 		const response = await fetch({
 			method: 'POST',
 			body: JSON.stringify(note),
@@ -30,9 +29,9 @@ export function useRemoteNote() {
 
 		if (status !== 201) throw new Error('Failed to create remote note')
 		return data.id
-	}, 4_000)
+	}
 
-	const update = useDebounce(async (note: UpdateNote) => {
+	const update = async (note: UpdateNote) => {
 		const noteCleaned = cleanObject(note)
 
 		const response = await fetch({
@@ -45,8 +44,8 @@ export function useRemoteNote() {
 		const { status, data, message } = await response.json<{ id: string }>()
 
 		if (status !== 200) throw new Error(message)
-		return data.id
-	}, 4_000)
+		return data.id !== null
+	}
 
 	const remove = async () => {}
 

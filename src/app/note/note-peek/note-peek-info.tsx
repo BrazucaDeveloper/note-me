@@ -15,7 +15,7 @@ export function NoteHeader({ title, isPinned }: NoteHeaderProps) {
 		<header className='flex justify-between w-full'>
 			<div className='space-x-1.5 font-semibold text-lg line-clamp-1'>
 				<Show condition={isPinned}>
-					<PinIcon className='size-4.5 inline -rotate-20' />
+					<PinIcon variant='filled' className='size-4.5 inline -rotate-20' />
 				</Show>
 				<span>{title}</span>
 			</div>
